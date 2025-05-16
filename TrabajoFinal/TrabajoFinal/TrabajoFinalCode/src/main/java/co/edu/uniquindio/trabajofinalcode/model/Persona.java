@@ -2,7 +2,7 @@ package co.edu.uniquindio.trabajofinalcode.model;
 
 import java.time.LocalDate;
 
-public abstract class Usuario {
+public abstract class Persona {
     protected String nombre;
     protected String apellido;
     protected String id;
@@ -10,7 +10,7 @@ public abstract class Usuario {
     protected String contacto;
     protected LocalDate fechaNacimiento;
 
-    public Usuario(String nombre, String apellido, String id, String correo, String contacto, LocalDate fechaNacimiento) {
+    public Persona(String nombre, String apellido, String id, String correo, String contacto, LocalDate fechaNacimiento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.id = id;
@@ -66,4 +66,6 @@ public abstract class Usuario {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    public abstract void registrar();
 }

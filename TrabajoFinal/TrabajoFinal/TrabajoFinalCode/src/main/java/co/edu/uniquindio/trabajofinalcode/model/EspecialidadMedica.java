@@ -1,12 +1,9 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
-public enum TipoEspecialidad {
-    MEDICINA_INTERNA,
+public enum EspecialidadMedica {
     PEDIATRIA,
     CARDIOLOGIA,
     DERMATOLOGIA,
-    PSIQUIATRIA,
     NEUROLOGIA,
-    CIRUGIA_GENERAL,
-    RADIOLOGIA;
+    MEDICINA_GENERAL
 }

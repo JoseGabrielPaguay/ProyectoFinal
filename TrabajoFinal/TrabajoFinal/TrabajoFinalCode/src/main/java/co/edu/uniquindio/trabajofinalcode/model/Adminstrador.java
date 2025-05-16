@@ -1,21 +1,17 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
-import java.time.LocalDate;
+public class Adminstrador  {
+    private String contrasena;
 
-public class Adminstrador extends Usuario{
-    private AreaAsignada areaAsignada;
-
-    public Adminstrador(String nombre, String apellido, String id, String correo,
-                        String contacto, LocalDate fechaNacimiento, AreaAsignada areaAsignada) {
-        super(nombre, apellido, id, correo, contacto, fechaNacimiento);
-        this.areaAsignada = areaAsignada;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public AreaAsignada getAreaAsignada() {
-        return areaAsignada;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public void setAreaAsignada(AreaAsignada areaAsignada) {
-        this.areaAsignada = areaAsignada;
+    public Adminstrador(String contrasena) {
+        this.contrasena = contrasena;
     }
 }
