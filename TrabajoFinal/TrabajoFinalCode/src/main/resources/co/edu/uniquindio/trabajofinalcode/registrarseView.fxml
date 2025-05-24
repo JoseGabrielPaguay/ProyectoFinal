@@ -21,7 +21,7 @@
       <TextField fx:id="txt_correo" layoutX="66.0" layoutY="235.0" prefHeight="26.0" prefWidth="248.0" promptText="Correo" />
       <TextField fx:id="txt_telefono" layoutX="66.0" layoutY="275.0" prefHeight="26.0" prefWidth="248.0" promptText="Teléfono" />
       <DatePicker fx:id="dp_fechaNacimiento" layoutX="65.0" layoutY="316.0" prefHeight="26.0" prefWidth="248.0" promptText="Fecha de Nacimiento" />
-      <PasswordField fx:id="txt_contraseña" layoutX="65.0" layoutY="361.0" prefHeight="26.0" prefWidth="248.0" promptText="Contraseña" />
-      <Button fx:id="btn_registrar" layoutX="123.0" layoutY="417.0" mnemonicParsing="false" onAction="#registrarAdmin" prefHeight="26.0" prefWidth="132.0" style="-fx-background-color: #487ad7;" text="Registrar" textFill="WHITE" />
+      <PasswordField fx:id="txt_contrasenia" layoutX="65.0" layoutY="361.0" prefHeight="26.0" prefWidth="248.0" promptText="Contraseña" />
+      <Button fx:id="btn_registrar" layoutX="123.0" layoutY="407.0" mnemonicParsing="false" onAction="#registrarAdmin" prefHeight="26.0" prefWidth="132.0" style="-fx-background-color: #487ad7;" text="Registrar" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 module co.edu.uniquindio.trabajofinalcode {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens co.edu.uniquindio.trabajofinalcode to javafx.fxml;

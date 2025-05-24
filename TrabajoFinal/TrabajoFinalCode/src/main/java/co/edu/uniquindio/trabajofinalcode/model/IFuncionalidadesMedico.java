@@ -4,5 +4,5 @@ public interface IFuncionalidadesMedico {
     boolean obtenerHistorialMedico();
     boolean registrarDiagnostico();
     boolean registrarTratamiento();
-    boolean NotificacionCambioCita();
+    boolean notificacionCambioCita();
 }

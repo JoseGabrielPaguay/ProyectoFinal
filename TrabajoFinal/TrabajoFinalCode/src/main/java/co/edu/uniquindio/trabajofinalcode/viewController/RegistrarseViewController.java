@@ -1,6 +1,9 @@
 package co.edu.uniquindio.trabajofinalcode.viewController;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquindio.trabajofinalcode.App;
+import co.edu.uniquindio.trabajofinalcode.controller.RegistrarseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +14,13 @@ import javafx.scene.control.TextField;
 
 public class RegistrarseViewController {
 
+    App app;
+    RegistrarseController registrarseController = new RegistrarseController();
+
+    public void setApp(App app) {
+        this.app = app;
+        registrarseController.setHospital(app.getHospital());
+    }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
