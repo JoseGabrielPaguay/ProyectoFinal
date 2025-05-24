@@ -1,6 +1,8 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
-public class Sala {
+import java.io.Serializable;
+
+public class Sala implements Serializable {
     private String numeroSala;
 
     public Sala(String numeroSala) {

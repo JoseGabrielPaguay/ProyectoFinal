@@ -2,6 +2,8 @@ module co.edu.uniquindio.trabajofinalcode {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires org.simplejavamail.core;
+    requires org.simplejavamail;
 
 
     opens co.edu.uniquindio.trabajofinalcode to javafx.fxml;

@@ -1,8 +1,9 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
     public String nombre;
     public String apellido;
     public String id;

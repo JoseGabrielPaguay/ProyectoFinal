@@ -1,11 +1,13 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
-public class Diagnostico {
+import java.io.Serializable;
 
-    String cedulaPaciente;
-    String nombrePaciente;
-    String tratamiento;
-    String descripcion;
+public class Diagnostico implements Serializable {
+
+    private String cedulaPaciente;
+    private String nombrePaciente;
+    private String tratamiento;
+    private String descripcion;
 
 
     public Diagnostico(String cedulaPaciente, String nombrePaciente, String tratamiento, String descripcion) {

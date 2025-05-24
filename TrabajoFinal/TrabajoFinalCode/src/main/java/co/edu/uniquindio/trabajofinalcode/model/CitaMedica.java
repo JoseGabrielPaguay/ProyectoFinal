@@ -1,13 +1,14 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class CitaMedica {
+public class CitaMedica implements Serializable {
     private int idCita;
     private LocalDate fecha;
     private LocalTime hora;
-    private String motivo;;
+    private String motivo;
     private String notasPrevias;
     private Sala sala;
 

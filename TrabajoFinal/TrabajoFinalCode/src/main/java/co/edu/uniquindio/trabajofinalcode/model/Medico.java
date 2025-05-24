@@ -1,8 +1,9 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Medico extends Usuario {
+public class Medico extends Usuario implements Serializable {
     private EspecialidadMedica especialidad;
     private String numeroLicencia;
 

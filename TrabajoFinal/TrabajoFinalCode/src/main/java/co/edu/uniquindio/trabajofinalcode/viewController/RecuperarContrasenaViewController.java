@@ -9,7 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 
 public class RecuperarContrasenaViewController {
@@ -21,6 +22,9 @@ public class RecuperarContrasenaViewController {
                 this.app = app;
                 recuperarContrasenaController.setHospital(app.getHospital());
         }
+
+        @FXML
+        private AnchorPane rootPane;
 
         @FXML // ResourceBundle that was given to the FXMLLoader
         private ResourceBundle resources;
@@ -37,6 +41,8 @@ public class RecuperarContrasenaViewController {
         @FXML
         void openViewIngresoCodigo(ActionEvent event) {
 
+                app.openViewIngresarCodigoView();
+                cerrarVentana();
         }
 
         @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -44,6 +50,11 @@ public class RecuperarContrasenaViewController {
                 assert btn_correoRecuperacion != null : "fx:id=\"btn_correoRecuperacion\" was not injected: check your FXML file 'recuperarContraseniaView.fxml'.";
                 assert txt_correo != null : "fx:id=\"txt_correo\" was not injected: check your FXML file 'recuperarContraseniaView.fxml'.";
 
+        }
+
+        private void cerrarVentana() {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.close();
         }
 
 }

@@ -1,10 +1,11 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Adminstrador extends Usuario{
+public class Administrador extends Usuario implements Serializable {
 
-    public Adminstrador(String nombre, String apellido, String id, String correo, String contacto, LocalDate fechaNacimiento, String contrasena) {
+    public Administrador(String nombre, String apellido, String id, String correo, String contacto, LocalDate fechaNacimiento, String contrasena) {
         super(nombre, apellido, id, correo, contacto, fechaNacimiento, contrasena);
     }
 
