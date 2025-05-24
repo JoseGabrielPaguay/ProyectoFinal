@@ -4,18 +4,18 @@ import java.util.LinkedList;
 
 public class Hospital {
     public String nombre;
+    public Adminstrador adminstrador;
     public LinkedList<Paciente> listPacientes;
     public LinkedList<Medico> listMedicos;
     public LinkedList<CitaMedica> listCitasMedicas;
     public LinkedList<HistorialMedico> listHistorialesMedicos;
 
-    public Hospital(String nombre, LinkedList<Paciente> listPacientes, LinkedList<Medico> listMedicos,
-                    LinkedList<CitaMedica> listCitasMedicas, LinkedList<HistorialMedico> listHistorialesMedicos) {
+    public Hospital(String nombre) {
         this.nombre = nombre;
-        this.listPacientes = listPacientes;
-        this.listMedicos = listMedicos;
-        this.listCitasMedicas = listCitasMedicas;
-        this.listHistorialesMedicos = listHistorialesMedicos;
+        this.listPacientes = new LinkedList<>();
+        this.listMedicos = new LinkedList<>();
+        this.listCitasMedicas = new LinkedList<>();
+        this.listHistorialesMedicos = new LinkedList<>();
     }
 
     public String getNombre() {

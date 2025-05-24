@@ -2,21 +2,32 @@ package co.edu.uniquindio.trabajofinalcode.model;
 
 import java.time.LocalDate;
 
-public abstract class Persona {
-    protected String nombre;
-    protected String apellido;
-    protected String id;
-    protected String correo;
-    protected String contacto;
-    protected LocalDate fechaNacimiento;
+public abstract class Usuario {
+    public String nombre;
+    public String apellido;
+    public String id;
+    public String correo;
+    public String telefono;
+    public LocalDate fechaNacimiento;
+    public String contrasena;
 
-    public Persona(String nombre, String apellido, String id, String correo, String contacto, LocalDate fechaNacimiento) {
+
+    public Usuario(String nombre, String apellido, String id, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.id = id;
         this.correo = correo;
-        this.contacto = contacto;
+        this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
+        this.contrasena = contrasena;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getNombre() {
@@ -51,12 +62,12 @@ public abstract class Persona {
         this.correo = correo;
     }
 
-    public String getContacto() {
-        return contacto;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public LocalDate getFechaNacimiento() {
@@ -67,5 +78,5 @@ public abstract class Persona {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public abstract void registrar();
+
 }

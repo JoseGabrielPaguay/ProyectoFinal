@@ -9,15 +9,13 @@ public class CitaMedica {
     private LocalTime hora;
     private String motivo;;
     private String notasPrevias;
-    private String sala;
+    private Sala sala;
 
-    public CitaMedica(int idCita, LocalDate fecha, LocalTime hora, String motivo, String notasPrevias,String sala) {
-        this.idCita = idCita;
+    public CitaMedica(LocalDate fecha, LocalTime hora, String motivo, String notasPrevias) {
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
         this.notasPrevias = notasPrevias;
-        this.sala=sala;
     }
 
     public int getIdCita() {
@@ -60,11 +58,11 @@ public class CitaMedica {
         this.notasPrevias = notasPrevias;
     }
 
-    public String getSala() {
+    public Sala getSala() {
         return sala;
     }
 
-    public void setSala(String sala) {
+    public void setSala(Sala sala) {
         this.sala = sala;
     }
 }
