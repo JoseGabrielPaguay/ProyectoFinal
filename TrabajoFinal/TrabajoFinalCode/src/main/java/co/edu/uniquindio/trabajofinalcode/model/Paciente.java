@@ -13,9 +13,9 @@ public class Paciente extends Usuario implements Serializable {
     private LinkedList<Diagnostico> diagnosticos;
     private String eps;
 
-    public Paciente(String nombre, String apellido, String id, String correo, String contacto,
+    public Paciente(String nombre, String apellido, String cedula, String correo, String contacto,
                     LocalDate fechaNacimiento, GrupoSanguineo tipoSangre, String eps ,String contrasena) {
-        super(nombre, apellido, id, correo, contacto, fechaNacimiento, contrasena);
+        super(nombre, apellido, cedula, correo, contacto, fechaNacimiento, contrasena);
         this.tipoSangre = tipoSangre;
         diagnosticos = new LinkedList<>();
         this.eps = eps;

@@ -6,17 +6,17 @@ import java.time.LocalDate;
 public abstract class Usuario implements Serializable {
     public String nombre;
     public String apellido;
-    public String id;
+    public String cedula;
     public String correo;
     public String telefono;
     public LocalDate fechaNacimiento;
     public String contrasena;
 
 
-    public Usuario(String nombre, String apellido, String id, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) {
+    public Usuario(String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.id = id;
+        this.cedula = cedula;
         this.correo = correo;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
@@ -47,12 +47,12 @@ public abstract class Usuario implements Serializable {
         this.apellido = apellido;
     }
 
-    public String getId() {
-        return id;
+    public String getCedula() {
+        return cedula;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getCorreo() {

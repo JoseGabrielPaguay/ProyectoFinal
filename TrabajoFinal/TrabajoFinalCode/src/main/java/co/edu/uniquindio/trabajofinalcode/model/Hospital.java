@@ -5,6 +5,7 @@ import co.edu.uniquindio.trabajofinalcode.util.Persistencia;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 public class Hospital {
@@ -14,6 +15,7 @@ public class Hospital {
     public LinkedList<Medico> listMedicos;
     public LinkedList<CitaMedica> listCitasMedicas;
     public LinkedList<Sala> listSalas;
+    public LinkedList<Diagnostico> listDiagnosticos;
 
     public Hospital(String nombre) {
         this.adminstrador = leerDatosAdministrador();
@@ -22,6 +24,7 @@ public class Hospital {
         this.listMedicos = leerDatosMedicos();
         this.listCitasMedicas = leerDatosCitas();
         this.listSalas = leerDatosSalas();
+        this.listDiagnosticos = leerDatosDiagnosticos();
     }
 
     public String getNombre() {
@@ -58,6 +61,7 @@ public class Hospital {
 
     /**
      * Método que permite registrar un administrador
+     *
      * @param nombre
      * @param apellido
      * @param cedula
@@ -67,17 +71,172 @@ public class Hospital {
      * @param contrasena
      * @throws Exception
      */
-    public void registrarAdmin(String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) throws Exception{
-        if(adminstrador != null){
+    public void registrarAdmin(String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) throws Exception {
+        if (adminstrador != null) {
             throw new Exception("Ya hay un admnistrador registrado");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new Exception("El nombre es necesario");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new Exception("El apellido es necesario");
+        }
+        if (cedula == null || cedula.isBlank()) {
+            throw new Exception("La cedula es necesaria");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new Exception("El correo es necesario");
+        }
+        if (telefono == null || telefono.isBlank()) {
+            throw new Exception("El telefono es necesario");
+        }
+        if (fechaNacimiento == null) {
+            throw new Exception("La fecha de nacimiento es necesaria");
+        }
+        if (contrasena == null || contrasena.isBlank()) {
+            throw new Exception("La contraseña es necesaria");
         }
         Administrador admnistrador = new Administrador(nombre, apellido, cedula, correo, telefono, fechaNacimiento, contrasena);
         this.adminstrador = admnistrador;
         guardarDatosAdmin(admnistrador);
     }
 
+    public void registrarDiagnosticos(String cedulaPaciente, String nombrePaciente, String tratamiento, String descripcion) throws Exception {
+
+        if (cedulaPaciente == null || cedulaPaciente.isBlank()) {
+            throw new Exception("la cedula del paciente es necesaria");
+        }
+        if (nombrePaciente == null || nombrePaciente.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (tratamiento == null || tratamiento.isBlank()) {
+            throw new Exception("El tipo de tratamiento es necesario");
+        }
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new Exception("La descripcion del diagnostico  es necesaria");
+        }
+
+        Diagnostico diagnostico = new Diagnostico(cedulaPaciente, nombrePaciente, tratamiento, descripcion);
+        listDiagnosticos.add(diagnostico);
+        guardarDatosDiagnosticos(listDiagnosticos);
+    }
+
+    public void registrarPaciente(String nombre, String apellido, String cedula, String telefono, String eps, LocalDate fechaNacimiento, GrupoSanguineo grupoSanguineo, String correo, String contrasena) throws Exception {
+        if (nombre == null || nombre.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (cedula == null || cedula.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (telefono == null || telefono.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (eps == null || eps.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (fechaNacimiento == null ) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (grupoSanguineo == null ) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        if (contrasena == null || contrasena.isBlank()) {
+            throw new Exception("El nombre del paciente es necsario");
+        }
+        Paciente paciente = new Paciente(nombre, apellido, cedula,correo,telefono,fechaNacimiento,grupoSanguineo,eps,contrasena);
+        listPacientes.add(paciente);
+        guardarDatosPacientes(listPacientes);
+    }
+
+
+    public void registrarMedico(String nombre, String apellido, String cedula, String telefono, String numeroLicencia, LocalDate fechaNacimiento, EspecialidadMedica especialidadMedica, String correo, String contrasena) throws Exception {
+        if (nombre == null || nombre.isBlank()) {
+            throw new Exception("El nombre del Medico es necsario");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new Exception("El apellido del medico es necsario");
+        }
+        if (cedula == null || cedula.isBlank()) {
+            throw new Exception("La cedula del medico es necsaria");
+        }
+        if (telefono == null || telefono.isBlank()) {
+            throw new Exception("El telefono del medico es necsario");
+        }
+        if (numeroLicencia == null || numeroLicencia.isBlank()) {
+            throw new Exception("El numero de licencia del medico es necsario");
+        }
+        if (fechaNacimiento == null ) {
+            throw new Exception("La fecha de nacimiento del medico es necearia");
+        }
+        if (especialidadMedica == null ) {
+            throw new Exception("La especialidad Medica es necesaria");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new Exception("El correo del Medico es necsario");
+        }
+        if (contrasena == null || contrasena.isBlank()) {
+            throw new Exception("La contraseña es necesaria");
+        }
+        Medico medico = new Medico(nombre, apellido, cedula, correo,telefono,fechaNacimiento,especialidadMedica,numeroLicencia,contrasena);
+        listMedicos.add(medico);
+        guardarDatosMedicos(listMedicos);
+    }
+
+    public void registrarSala(String numeroSala) throws Exception {
+        if (numeroSala == null || numeroSala.isBlank()) {
+            throw new Exception("El numero de sala es necesario");
+        }
+        Sala sala = new Sala(numeroSala);
+        listSalas.add(sala);
+        guardarDatosSalas(listSalas);
+    }
+
+
+    public void registrarCitaMedica(LocalDate fecha, LocalTime hora, String motivo, String notasPrevias) throws Exception {
+
+        if (fecha == null ) {
+            throw new Exception("La fecha de la cita es necesaria");
+        }
+        if (hora == null ) {
+            throw new Exception("La hora de la cita es necesaria");
+        }
+        if (motivo == null || motivo.isBlank()) {
+            throw new Exception("El motivo del paciente es necsario");
+        }
+        if (notasPrevias == null || notasPrevias.isBlank()) {
+            throw new Exception("Las notas previas de la cita son necesarias");
+        }
+        CitaMedica citaMedica = new CitaMedica(fecha, hora, motivo, notasPrevias);
+        listCitasMedicas.add(citaMedica);
+        guardarDatosCitas(listCitasMedicas);
+    }
+
+
+    public void eliminarPaciente(String cedula) throws Exception{
+        if (cedula == null || cedula.isBlank()) {
+            throw new Exception("La cedula del paciente es necesaria");
+        }
+        if(cedula )
+        for (Paciente paciente : listPacientes) {
+            if (paciente.getCedula().equals(cedula)) {
+                listPacientes.remove(paciente);
+                break;
+            }
+        }
+    }
+
+
+
+
     /**
      * Método para guardar los datos de los pacientes
+     *
      * @param pacientes
      */
     public void guardarDatosPacientes(LinkedList<Paciente> pacientes) {
@@ -90,13 +249,14 @@ public class Hospital {
 
     /**
      * Método para leer los datos de los pacientes
+     *
      * @return pacientes guardados
      */
     public LinkedList<Paciente> leerDatosPacientes() {
         try {
             Object datos = Persistencia.deserializarObjeto(Constantes.RUTA_PACIENTES);
             if (datos != null) {
-                return (LinkedList<Paciente>)datos;
+                return (LinkedList<Paciente>) datos;
             }
         } catch (Exception e) {
             System.err.println("Error cargando pacientes: " + e.getMessage());
@@ -106,6 +266,7 @@ public class Hospital {
 
     /**
      * Método para guardar los datos del admin
+     *
      * @param admin
      */
     public void guardarDatosAdmin(Administrador admin) {
@@ -118,6 +279,7 @@ public class Hospital {
 
     /**
      * Método para leer los datos de los clientes
+     *
      * @return clientes guardados
      */
     public Administrador leerDatosAdministrador() {
@@ -134,6 +296,7 @@ public class Hospital {
 
     /**
      * Método para guardar los datos de los medicos
+     *
      * @param medicos
      */
     public void guardarDatosMedicos(LinkedList<Medico> medicos) {
@@ -146,6 +309,7 @@ public class Hospital {
 
     /**
      * Método para leer los datos de los medicos
+     *
      * @return medicos guardados
      */
     public LinkedList<Medico> leerDatosMedicos() {
@@ -162,6 +326,7 @@ public class Hospital {
 
     /**
      * Método para guardar los datos de las citas
+     *
      * @param citas
      */
     public void guardarDatosCitas(LinkedList<CitaMedica> citas) {
@@ -174,6 +339,7 @@ public class Hospital {
 
     /**
      * Método para leer los datos de las citas
+     *
      * @return citas
      */
     public LinkedList<CitaMedica> leerDatosCitas() {
@@ -190,6 +356,7 @@ public class Hospital {
 
     /**
      * Método para guardar los datos de las salas
+     *
      * @param salas
      */
     public void guardarDatosSalas(LinkedList<Sala> salas) {
@@ -202,6 +369,7 @@ public class Hospital {
 
     /**
      * Método para leer los datos de las salas
+     *
      * @return citas
      */
     public LinkedList<Sala> leerDatosSalas() {
@@ -212,6 +380,31 @@ public class Hospital {
             }
         } catch (Exception e) {
             System.err.println("Error cargando salas: " + e.getMessage());
+        }
+        return new LinkedList<>();
+    }
+
+    public void guardarDatosDiagnosticos(LinkedList<Diagnostico> diagnosticos) {
+        try {
+            Persistencia.serializarObjeto(Constantes.RUTA_DIAGNOSTICOS, diagnosticos);
+        } catch (IOException e) {
+            System.err.println("Error guardando diagnosticos: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método para leer los datos de las salas
+     *
+     * @return citas
+     */
+    public LinkedList<Diagnostico> leerDatosDiagnosticos() {
+        try {
+            Object datos = Persistencia.deserializarObjeto(Constantes.RUTA_DIAGNOSTICOS);
+            if (datos != null) {
+                return (LinkedList<Diagnostico>) datos;
+            }
+        } catch (Exception e) {
+            System.err.println("Error cargando Diagnosticos: " + e.getMessage());
         }
         return new LinkedList<>();
     }
