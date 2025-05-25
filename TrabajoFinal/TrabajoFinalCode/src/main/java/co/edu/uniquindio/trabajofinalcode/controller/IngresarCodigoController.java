@@ -9,4 +9,12 @@ public class IngresarCodigoController {
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
     }
+
+    public void cambiarContrasena(String codigo, String nuevaContrasena, String correo){
+        try{
+            hospital.cambiarContrasena(codigo, nuevaContrasena, correo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

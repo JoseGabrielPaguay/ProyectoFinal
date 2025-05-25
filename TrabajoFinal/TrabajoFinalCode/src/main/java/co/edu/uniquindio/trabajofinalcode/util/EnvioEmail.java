@@ -6,11 +6,6 @@ import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-
 public class EnvioEmail {
 
 
@@ -37,30 +32,4 @@ public class EnvioEmail {
             e.printStackTrace();
         }
     }
-
-    public static void enviarNotificacionQR(String destinatario, String asunto, String mensaje, Path qrPath) throws Exception {
-
-
-        Email email = EmailBuilder.startingBlank()
-                .from("tilininsanofreefire666@gmail.com")
-                .to(destinatario)
-                .withSubject(asunto)
-                .withPlainText(mensaje)
-                .withAttachment("QR", Files.readAllBytes(qrPath), "image/png")
-                .buildEmail();
-
-
-        try (Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "tilininsanofreefire666@gmail.com", "dmkw oukw pwxi shdi")
-                .withTransportStrategy(TransportStrategy.SMTP_TLS)
-                .withDebugLogging(true)
-                .buildMailer()) {
-
-
-            mailer.sendMail(email);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
 }

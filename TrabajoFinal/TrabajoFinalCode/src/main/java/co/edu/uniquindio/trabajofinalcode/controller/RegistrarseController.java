@@ -1,6 +1,7 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
+import javafx.scene.control.Alert;
 
 import java.time.LocalDate;
 
@@ -20,4 +21,5 @@ public class RegistrarseController {
             throw new RuntimeException(e);
         }
     }
+
 }

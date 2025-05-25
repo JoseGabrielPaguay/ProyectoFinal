@@ -65,8 +65,13 @@ public class RegistrarseViewController {
         String contrasena = txt_contrasena.getText();
         LocalDate fechaNacimiento = dp_fechaNacimiento.getValue();
 
-        registrarseController.registrarAdmin(nombre, apellido, cedula, correo, telefono, fechaNacimiento, contrasena);
-        mostrarAlerta("Admnistrador registrado correctamente", Alert.AlertType.CONFIRMATION);
+        try{
+            registrarseController.registrarAdmin(nombre, apellido, cedula, correo, telefono, fechaNacimiento, contrasena);
+            mostrarAlerta("Admnistrador registrado correctamente", Alert.AlertType.CONFIRMATION);
+        } catch (Exception e) {
+            mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
+        }
 
     }
 

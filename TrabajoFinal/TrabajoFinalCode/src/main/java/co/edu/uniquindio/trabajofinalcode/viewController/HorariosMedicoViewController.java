@@ -1,12 +1,15 @@
 package co.edu.uniquindio.trabajofinalcode.viewController;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.HorariosMedicoController;
+import co.edu.uniquindio.trabajofinalcode.model.Medico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
@@ -14,10 +17,15 @@ public class HorariosMedicoViewController {
 
     App app;
     HorariosMedicoController horariosMedicoController = new HorariosMedicoController();
+    Medico medico;
 
     public void setApp(App app) {
         this.app = app;
         horariosMedicoController.setHospital(app.getHospital());
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -30,18 +38,32 @@ public class HorariosMedicoViewController {
         private Button btn_confirmar; // Value injected by FXMLLoader
 
         @FXML // fx:id="cb_horarios"
-        private ComboBox<?> cb_horarios; // Value injected by FXMLLoader
+        private ComboBox<String> cb_horarios; // Value injected by FXMLLoader
 
         @FXML
         void confirmar(ActionEvent event) {
-
+            String horario = cb_horarios.getValue();
+            try{
+                horariosMedicoController.setHorarioMedico(horario, medico.getCedula());
+            } catch (Exception e) {
+                mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
+            }
         }
 
         @FXML // This method is called by the FXMLLoader when initialization is complete
         void initialize() {
-            assert btn_confirmar != null : "fx:id=\"btn_confirmar\" was not injected: check your FXML file 'horariosMedicoView.fxml'.";
-            assert cb_horarios != null : "fx:id=\"cb_horarios\" was not injected: check your FXML file 'horariosMedicoView.fxml'.";
+            LinkedList<String> horarios = horariosMedicoController.HorariosAElegirMedico();
+            cb_horarios.getItems().addAll(horarios);
+          }
 
-        }
+    // Método para mostrar alertas
+    public void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
 
 }

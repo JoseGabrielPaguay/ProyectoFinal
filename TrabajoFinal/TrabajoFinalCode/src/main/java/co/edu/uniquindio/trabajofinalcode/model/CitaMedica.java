@@ -5,25 +5,39 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CitaMedica implements Serializable {
-    private int idCita;
+    private String idCita;
     private LocalDate fecha;
-    private LocalTime hora;
+    private String hora;
     private String motivo;
     private String notasPrevias;
     private Sala sala;
+    private Paciente paciente;
+    private Medico medico;
 
-    public CitaMedica(LocalDate fecha, LocalTime hora, String motivo, String notasPrevias) {
+    public CitaMedica(String id, LocalDate fecha, String hora, String motivo, String notasPrevias, Sala sala, Paciente paciente, Medico medico) {
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
         this.notasPrevias = notasPrevias;
+        this.idCita = id;
+        this.sala = sala;
+        this.paciente=paciente;
+        this.medico=medico;
     }
 
-    public int getIdCita() {
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getIdCita() {
         return idCita;
     }
 
-    public void setIdCita(int idCita) {
+    public void setIdCita(String  idCita) {
         this.idCita = idCita;
     }
 
@@ -35,11 +49,11 @@ public class CitaMedica implements Serializable {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 

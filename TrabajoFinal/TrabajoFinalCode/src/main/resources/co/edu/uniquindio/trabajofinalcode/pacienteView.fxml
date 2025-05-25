@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="939.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="939.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="txt_bienvenido" layoutX="19.0" layoutY="14.0" prefHeight="59.0" prefWidth="371.0" style="-fx-background-color: #487ad7; -fx-background-radius: 5;" text="    Bienvenido, &quot;PacienteName&quot;" textFill="WHITE">
          <font>
@@ -23,10 +23,10 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dp_fechaCita" layoutX="75.0" layoutY="154.0" onAction="#dp_fechaCita" prefHeight="26.0" prefWidth="257.0" promptText="Fecha" />
-      <ComboBox fx:id="cbx_horaCita" layoutX="75.0" layoutY="191.0" onAction="#cb_horaCita" opacity="0.48" prefHeight="26.0" prefWidth="258.0" promptText="Hora" />
-      <TextField fx:id="txt_motivoCita" layoutX="74.0" layoutY="232.0" onAction="#txt_moticoCIta" prefHeight="26.0" prefWidth="258.0" promptText="Motivo" />
-      <TextField fx:id="txt_notasPreviasCita" layoutX="74.0" layoutY="268.0" onAction="#txt_notasPrevias" prefHeight="86.0" prefWidth="258.0" promptText="Notas Previas" />
+      <DatePicker fx:id="dp_fechaCita" layoutX="75.0" layoutY="154.0" prefHeight="26.0" prefWidth="257.0" promptText="Fecha" />
+      <ComboBox fx:id="cbx_horaCita" layoutX="75.0" layoutY="191.0" opacity="0.48" prefHeight="26.0" prefWidth="258.0" promptText="Hora" />
+      <TextField fx:id="txt_motivoCita" layoutX="74.0" layoutY="232.0" prefHeight="26.0" prefWidth="258.0" promptText="Motivo" />
+      <TextField fx:id="txt_notasPreviasCita" layoutX="74.0" layoutY="268.0" prefHeight="86.0" prefWidth="258.0" promptText="Notas Previas" />
       <Button fx:id="btn_solicitarCita" layoutX="148.0" layoutY="375.0" mnemonicParsing="false" onAction="#agregarCitaAction" prefHeight="27.0" prefWidth="93.0" style="-fx-background-color: #487ad7; -fx-background-radius: 20px;" text="Solicitar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -58,5 +58,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
+      <Label fx:id="txt_verDiagnosticos" layoutX="270.0" layoutY="440.0" onMouseClicked="#abrirDiagnosticosView" prefHeight="18.0" prefWidth="125.0" text="Ver mis diagnosticos" textFill="#487ad7">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -2,9 +2,11 @@ package co.edu.uniquindio.trabajofinalcode.viewController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.RecuperarContrasenaController;
+import co.edu.uniquindio.trabajofinalcode.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,8 +42,12 @@ public class RecuperarContrasenaViewController {
 
         @FXML
         void openViewIngresoCodigo(ActionEvent event) {
-
-                app.openViewIngresarCodigoView();
+                String correo = txt_correo.getText();
+                Usuario usuario = recuperarContrasenaController.obtenerUsuarioCorreo(correo);
+                String codigoValidacion = UUID.randomUUID().toString();
+                recuperarContrasenaController.enviarCorreo(correo, "Codigo de verificación", "Este es su codigo de verificación: " + codigoValidacion);
+                usuario.setCodigoValidacion(codigoValidacion);
+                app.openViewIngresarCodigoView(usuario);
                 cerrarVentana();
         }
 

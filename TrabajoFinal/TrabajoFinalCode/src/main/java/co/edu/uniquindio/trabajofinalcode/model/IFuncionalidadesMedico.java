@@ -1,8 +1,8 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
 public interface IFuncionalidadesMedico {
-    boolean obtenerHistorialMedico();
+    boolean obtenerHistorialMedicoPaciente();
     boolean registrarDiagnostico();
     boolean registrarTratamiento();
-    boolean notificacionCambioCita();
+
 }

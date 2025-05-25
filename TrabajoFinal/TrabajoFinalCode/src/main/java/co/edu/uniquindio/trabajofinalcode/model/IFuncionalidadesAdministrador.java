@@ -1,13 +1,15 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import java.util.LinkedList;
+
 public interface IFuncionalidadesAdministrador {
-    boolean crearMedico();
-    boolean actualizarMedico();
-    boolean eliminarMedico();
-    boolean crearPaciente();
-    boolean actualizarPaciente();
-    boolean eliminarPaciente();
-    boolean verificarDisponibilidadMedico();
-    boolean verificarDisponibilidadPaciente();
-    boolean generarReporteCita();
+    void registrarMedico();
+    void actualizarMedico();
+    void eliminarMedico();
+    void registrarPaciente();
+    void actualizarPaciente();
+    void eliminarPaciente();
+    LinkedList<CitaMedica> generarReporteCitas();
+    void eliminarCitaMedica();
+
 }

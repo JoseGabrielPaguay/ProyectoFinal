@@ -1,7 +1,12 @@
 package co.edu.uniquindio.trabajofinalcode.model;
 
+import co.edu.uniquindio.trabajofinalcode.util.Constantes;
+import co.edu.uniquindio.trabajofinalcode.util.Persistencia;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.LinkedList;
 
 public abstract class Usuario implements Serializable {
     public String nombre;
@@ -11,6 +16,7 @@ public abstract class Usuario implements Serializable {
     public String telefono;
     public LocalDate fechaNacimiento;
     public String contrasena;
+    private String codigoValidacion;
 
 
     public Usuario(String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaNacimiento, String contrasena) {
@@ -21,6 +27,16 @@ public abstract class Usuario implements Serializable {
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.contrasena = contrasena;
+    }
+
+
+
+    public void setCodigoValidacion(String codigoValidacion) {
+        this.codigoValidacion = codigoValidacion;
+    }
+
+    public String getCodigoValidacion() {
+        return codigoValidacion;
     }
 
     public String getContrasena() {

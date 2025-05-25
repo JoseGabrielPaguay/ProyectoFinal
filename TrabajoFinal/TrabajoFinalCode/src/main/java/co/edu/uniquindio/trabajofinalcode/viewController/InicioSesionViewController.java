@@ -5,12 +5,13 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.InicioSesionController;
+import co.edu.uniquindio.trabajofinalcode.model.Administrador;
+import co.edu.uniquindio.trabajofinalcode.model.Medico;
+import co.edu.uniquindio.trabajofinalcode.model.Paciente;
+import co.edu.uniquindio.trabajofinalcode.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 public class InicioSesionViewController {
@@ -46,16 +47,49 @@ public class InicioSesionViewController {
 
     @FXML
     void abrirOlvidasteContraseniaView(MouseEvent event) {
-
+        app.openViewRecuperarContrasenaView();
     }
 
     @FXML
     void abrirRegistrarseView(MouseEvent event) {
-
+        app.openViewRegistrarseView();
     }
 
     @FXML
     void iniciarSesioAction(ActionEvent event) {
+        String contrasena = txt_contrasenia.getText();
+        String correo = txt_nombreUsuario.getText();
+        Usuario usuario = inicioSesionController.obtenerUsuarioCorreo(correo);
+        if(usuario instanceof Paciente){
+            try{
+                if(inicioSesionController.iniciarSesion(correo, contrasena)){
+                    app.openViewPacienteView((Paciente) usuario);
+                }
+            } catch (Exception e) {
+                mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
+            }
+        }
+        if(usuario instanceof Medico){
+            try{
+                if(inicioSesionController.iniciarSesion(correo, contrasena)){
+                    app.openViewMedicoView((Medico) usuario);
+                }
+            } catch (Exception e) {
+                mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
+            }
+        }
+        if(usuario instanceof Administrador){
+            try{
+                if(inicioSesionController.iniciarSesion(correo, contrasena)){
+                    app.openViewAdministradorView((Administrador) usuario);
+                }
+            } catch (Exception e) {
+                mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
+            }
+        }
 
     }
 
@@ -67,6 +101,15 @@ public class InicioSesionViewController {
         assert txt_nombreUsuario != null : "fx:id=\"txt_nombreUsuario\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
         assert txt_registarse != null : "fx:id=\"txt_registarse\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
 
+    }
+
+    // Método para mostrar alertas
+    public void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
 }
