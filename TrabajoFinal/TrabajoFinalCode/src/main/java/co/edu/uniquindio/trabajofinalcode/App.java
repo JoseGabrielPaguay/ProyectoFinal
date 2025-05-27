@@ -202,7 +202,7 @@ public class App extends Application {
     public void openViewHistorialPacientesView(Paciente paciente) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("historialPacientesView.fxml"));
+            loader.setLocation(App.class.getResource("historialPacientelView.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             HistorialPacientesViewController historialPacientesViewController = loader.getController();
             historialPacientesViewController.setApp(this);

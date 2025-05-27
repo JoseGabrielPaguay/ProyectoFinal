@@ -479,26 +479,6 @@ public class AdministradorViewController {
         if (selectedItem != null) {
             this.pacienteSeleccionado = selectedItem;
         }
-
-        Paciente paciente = pacienteSeleccionado;
-        String nombre = paciente.getNombre();
-        String apellido = paciente.getApellido();
-        String cedula = paciente.getCedula();
-        String telefono = paciente.getTelefono();
-        String eps = paciente.getEps();
-        LocalDate fechaNacimiento = paciente.getFechaNacimiento();
-        GrupoSanguineo tipoSangre = paciente.getTipoSangre();
-        String correo = paciente.getCorreo();
-
-        txt_nombrePaciente.setText(nombre);
-        txt_apellidoPaciente.setText(apellido);
-        txt_cedulaP.setText(cedula);
-        txt_telefonoP.setText(telefono);
-        txt_epsP.setText(eps);
-        dp_fechaNacimientoP.setValue(fechaNacimiento);
-        cb_tipoSangreP.setValue(tipoSangre);
-        txt_correoP.setText(correo);
-
     }
 
     // Método para obtener el objeto seleccionado de la tabla de medicos
@@ -507,7 +487,6 @@ public class AdministradorViewController {
         if (selectedItem != null) {
             this.medicoSeleccionado = selectedItem;
         }
-        //Cambios aqui
     }
 
     // Método para obtener el objeto seleccionado de la tabla de citas
@@ -516,16 +495,6 @@ public class AdministradorViewController {
         if (selectedItem != null) {
             this.citaSeleccionada = selectedItem;
         }
-        CitaMedica citaMedica = citaSeleccionada;
-        String idCta = citaMedica.getIdCita();
-        LocalDate fecha = citaMedica.getFecha();
-        Horario hora = citaMedica.getHora();
-        String motivo = citaMedica.getMotivo();
-        String notasPrevias = citaMedica.getNotasPrevias();
-        Sala sala = citaMedica.getSala();
-        Paciente paciente = citaMedica.getPaciente();
-        Medico medico = citaMedica.getMedico();
-
     }
 
     // Método para mostrar alertas
@@ -562,21 +531,21 @@ public class AdministradorViewController {
     public void cargarMedicos(){
         LinkedList<Medico> medicos = administradorController.listaMedicos();
 
-        tbl_listaCitas.getItems().clear();
+        tbl_listaMedicos.getItems().clear();
         observableListMedicos.setAll(medicos);
     }
 
     public void cargarPacientes(){
         LinkedList<Paciente> pacientes = administradorController.listaPacientes();
 
-        tbl_listaCitas.getItems().clear();
+        tbl_listaPacientes.getItems().clear();
         observableListPacientes.setAll(pacientes);
     }
 
     public void cargarSalas(){
         LinkedList<Sala> salas = administradorController.listaSala();
 
-        tbl_listaCitas.getItems().clear();
+        tbl_salas.getItems().clear();
         observableListSalas.setAll(salas);
     }
 

@@ -21,10 +21,9 @@ public class MedicoController {
         }
     }
 
-    public void registrarDiagnostico(String cedulaPaciente, String descripcion){
+    public void registrarDiagnostico(String cedulaMedico, String cedulaPaciente, String descripcion){
         try{
-            Paciente paciente = hospital.buscarPacienteCedula(cedulaPaciente);
-            hospital.registrarDiagnostico(cedulaPaciente, paciente.getNombre(), descripcion);
+            hospital.registrarDiagnostico(cedulaMedico, cedulaPaciente, descripcion);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

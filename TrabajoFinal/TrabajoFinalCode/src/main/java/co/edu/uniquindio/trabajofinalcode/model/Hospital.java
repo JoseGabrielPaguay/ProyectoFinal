@@ -354,7 +354,7 @@ public class Hospital {
      * @param descripcion
      * @throws Exception
      */
-    public void registrarDiagnostico(String cedulaMedico, String cedulaPaciente, String descripcion) throws Exception {
+        public void registrarDiagnostico(String cedulaMedico, String cedulaPaciente, String descripcion) throws Exception {
         if (cedulaPaciente == null || cedulaPaciente.isBlank()) {
             throw new Exception("la cedula del paciente es necesaria");
         }
@@ -823,6 +823,7 @@ public class Hospital {
         for (CitaMedica citaMedica : listCitasMedicas) {
             if (citaMedica.getIdCita().equals(idCita)) {
                 listCitasMedicas.remove(citaMedica);
+                guardarDatosCitas(listCitasMedicas);
                 eliminado = true;
                 EnvioEmail.enviarNotificacion(cita.getPaciente().getCorreo(), "Cancelación de cita", "Señor/a " +
                         cita.getPaciente().getNombre() + ", su cita con el id " + idCita + ", fue cancelada");

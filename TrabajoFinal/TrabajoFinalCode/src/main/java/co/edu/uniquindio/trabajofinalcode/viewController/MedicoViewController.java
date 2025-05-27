@@ -110,10 +110,11 @@ public class MedicoViewController {
 
     @FXML
     void crearDiagnostico(ActionEvent event) {
-        String cedula = txt_cedulaPaciente.getText();
+        String cedulaMedico = medico.getCedula();
+        String cedulaPaciente = txt_cedulaPaciente.getText();
         String diagnostico = txt_diagnosticoPaciente.getText();
         try{
-            medicoController.registrarDiagnostico(cedula, diagnostico);
+            medicoController.registrarDiagnostico(cedulaMedico, cedulaPaciente, diagnostico);
             mostrarAlerta("Diagnostico creado con exito", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
