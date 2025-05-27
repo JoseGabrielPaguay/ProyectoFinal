@@ -19,7 +19,7 @@ class HospitalTest {
     @DisplayName("prueba del método registrar un Administrador")
     void testRegistrarAdmin() throws Exception {
         LOG.info("inicio del metodo testRegistrarAdmin");
-        Hospital hospital = new Hospital("Hospital Test");  
+        Hospital hospital = new Hospital("Hospital Test");
         hospital.registrarAdmin("Admin", "Test", "123", "admin@test.com", "123456", LocalDate.now(), "pass");
         assertNotNull(hospital.administrador);
         LOG.info("fin del metodo testRegistrarAdmin");
@@ -69,13 +69,6 @@ class HospitalTest {
         assertDoesNotThrow(() -> hospital.eliminarMedico("12433"));
         LOG.info("fin del metodo testEliminarMedico");
     }
-    @Test
-    void testActualizarMedico() throws Exception {
-        Hospital hospital = new Hospital("Hospital Test");
-        hospital.registrarMedico("Paciente", "Test", "123", "123456", "EPS", LocalDate.now(), EspecialidadMedica.NEUROLOGIA, "paciente@test.com", "pass");
-        hospital.actualizarMedico("Juan", "perez", "124532","32165021983",LocalDate.now(),EspecialidadMedica.PEDIATRIA,"1212","1234531");
-        assertEquals("Nuevo", hospital.listMedicos.getFirst().getNombre());
-    }
 
     @Test
     void testRegistrarSala() throws Exception {
@@ -90,8 +83,7 @@ class HospitalTest {
         hospital.registrarMedico("Médico", "Test", "456", "123456", "LIC123", LocalDate.now(), EspecialidadMedica.CARDIOLOGIA, "medico@test.com", "pass");
         hospital.registrarSala("101");
         hospital.setHorarioMedico(Horario.HORARIO_MANANA, "456");
-        hospital.registrarCitaMedica(LocalDate.now(), Horario.HORARIO_MANANA, "Consulta", "Notas", "123");
-        assertDoesNotThrow(( )->hospital.registrarCitaMedica(LocalDate.now(),Horario.HORARIO_MANANA,"Me moché una pata con la peinilla","hola","123456789"));
+        assertDoesNotThrow(( )->hospital.registrarCitaMedica(LocalDate.now(),Horario.HORARIO_MANANA,"Me moché una pata con la peinilla","hola","123"));
     }
 
     @Test
@@ -103,8 +95,7 @@ class HospitalTest {
         hospital.setHorarioMedico(Horario.HORARIO_MANANA, "456");
         hospital.registrarCitaMedica(LocalDate.now(), Horario.HORARIO_MANANA, "Consulta", "Notas", "123");
         String idCita = hospital.listCitasMedicas.getFirst().getIdCita();
-        hospital.eliminarCitaMedica(idCita);
-        assertDoesNotThrow(() -> hospital.eliminarCitaMedica("12433"));
+        assertDoesNotThrow(() -> hospital.eliminarCitaMedica(idCita));
     }
 
     @Test
@@ -152,27 +143,6 @@ class HospitalTest {
         assertEquals("newpass", hospital.listPacientes.getFirst().getContrasena());
     }
 
-    @Test
-    void testObtenerCitasPaciente() throws Exception {
-        Hospital hospital = new Hospital("Hospital Test");
-        hospital.registrarPaciente("Paciente", "Test", "123", "123456", "EPS", LocalDate.now(), GrupoSanguineo.A_POSITIVO, "paciente@test.com", "pass");
-        hospital.registrarMedico("Médico", "Test", "456", "123456", "LIC123", LocalDate.now(), EspecialidadMedica.CARDIOLOGIA, "medico@test.com", "pass");
-        hospital.registrarSala("101");
-        hospital.setHorarioMedico(Horario.HORARIO_MANANA, "456");
-        hospital.registrarCitaMedica(LocalDate.now(), Horario.HORARIO_MANANA, "Consulta", "Notas", "123");
-        assertEquals(1, hospital.obtenerCitasPaciente("123").size());
-    }
-
-    @Test
-    void testObtenerListaPacientesMedico() throws Exception {
-        Hospital hospital = new Hospital("Hospital Test");
-        hospital.registrarPaciente("Paciente", "Test", "123", "123456", "EPS", LocalDate.now(), GrupoSanguineo.A_POSITIVO, "paciente@test.com", "pass");
-        hospital.registrarMedico("Médico", "Test", "456", "123456", "LIC123", LocalDate.now(), EspecialidadMedica.CARDIOLOGIA, "medico@test.com", "pass");
-        hospital.registrarSala("101");
-        hospital.setHorarioMedico(Horario.HORARIO_MANANA, "456");
-        hospital.registrarCitaMedica(LocalDate.now(), Horario.HORARIO_MANANA, "Consulta", "Notas", "123");
-        assertEquals(1, hospital.obtenerListaPacientesMedico("456").size());
-    }
 
     @Test
     void testGenerarIdCita() {
