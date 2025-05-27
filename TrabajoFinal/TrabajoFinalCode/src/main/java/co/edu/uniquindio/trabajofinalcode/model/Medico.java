@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Medico extends Usuario implements Serializable {
     private EspecialidadMedica especialidad;
     private String numeroLicencia;
-    private String horario;
+    private Horario horario;
 
     public Medico(String nombre, String apellido, String id, String correo,
                   String contacto, LocalDate fechaNacimiento, EspecialidadMedica especialidad, String numeroLicencia, String contraseña) {
@@ -15,11 +15,11 @@ public class Medico extends Usuario implements Serializable {
         this.numeroLicencia = numeroLicencia;
     }
 
-    public String getHorario() {
+    public Horario getHorario() {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    public void setHorario(Horario horario) {
         this.horario = horario;
     }
 

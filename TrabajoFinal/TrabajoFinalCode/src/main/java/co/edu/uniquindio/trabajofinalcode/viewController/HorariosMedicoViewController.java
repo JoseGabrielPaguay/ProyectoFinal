@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.HorariosMedicoController;
+import co.edu.uniquindio.trabajofinalcode.model.Horario;
+import co.edu.uniquindio.trabajofinalcode.model.Hospital;
 import co.edu.uniquindio.trabajofinalcode.model.Medico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,11 +40,11 @@ public class HorariosMedicoViewController {
         private Button btn_confirmar; // Value injected by FXMLLoader
 
         @FXML // fx:id="cb_horarios"
-        private ComboBox<String> cb_horarios; // Value injected by FXMLLoader
+        private ComboBox<Horario> cb_horarios; // Value injected by FXMLLoader
 
         @FXML
         void confirmar(ActionEvent event) {
-            String horario = cb_horarios.getValue();
+            Horario horario = cb_horarios.getValue();
             try{
                 horariosMedicoController.setHorarioMedico(horario, medico.getCedula());
             } catch (Exception e) {
@@ -53,8 +55,8 @@ public class HorariosMedicoViewController {
 
         @FXML // This method is called by the FXMLLoader when initialization is complete
         void initialize() {
-            LinkedList<String> horarios = horariosMedicoController.HorariosAElegirMedico();
-            cb_horarios.getItems().addAll(horarios);
+            //LinkedList<String> horarios = horariosMedicoController.HorariosAElegirMedico();
+            //cb_horarios.getItems().addAll(horarios);
           }
 
     // Método para mostrar alertas

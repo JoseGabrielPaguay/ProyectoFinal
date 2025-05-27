@@ -25,6 +25,14 @@ public class CitaMedica implements Serializable {
         this.medico=medico;
     }
 
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
     public Paciente getPaciente() {
         return paciente;
     }

@@ -70,7 +70,7 @@ public class ActualizarPacienteViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        
+
     }
 
     // Método para mostrar alertas

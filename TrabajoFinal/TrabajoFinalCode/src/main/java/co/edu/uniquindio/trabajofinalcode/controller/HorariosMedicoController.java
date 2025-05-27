@@ -1,5 +1,6 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
+import co.edu.uniquindio.trabajofinalcode.model.Horario;
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
 
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ public class HorariosMedicoController {
         this.hospital = hospital;
     }
 
-    public void setHorarioMedico(String horarioMedico, String cedulaMedico){
+    public void setHorarioMedico(Horario horarioMedico, String cedulaMedico){
         try{
             hospital.setHorarioMedico(horarioMedico, cedulaMedico);
         } catch (Exception e) {

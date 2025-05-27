@@ -39,8 +39,8 @@ public class InicioSesionViewController {
     @FXML // fx:id="txt_contrasenia"
     private PasswordField txt_contrasenia; // Value injected by FXMLLoader
 
-    @FXML // fx:id="txt_nombreUsuario"
-    private TextField txt_nombreUsuario; // Value injected by FXMLLoader
+    @FXML // fx:id="txt_correo"
+    private TextField txt_correo; // Value injected by FXMLLoader
 
     @FXML // fx:id="txt_registarse"
     private Label txt_registarse; // Value injected by FXMLLoader
@@ -58,7 +58,7 @@ public class InicioSesionViewController {
     @FXML
     void iniciarSesioAction(ActionEvent event) {
         String contrasena = txt_contrasenia.getText();
-        String correo = txt_nombreUsuario.getText();
+        String correo = txt_correo.getText();
         Usuario usuario = inicioSesionController.obtenerUsuarioCorreo(correo);
         if(usuario instanceof Paciente){
             try{
@@ -95,11 +95,6 @@ public class InicioSesionViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert btn_iniciarSesion != null : "fx:id=\"btn_iniciarSesion\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
-        assert label_olvidasteLaContrasenia != null : "fx:id=\"label_olvidasteLaContrasenia\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
-        assert txt_contrasenia != null : "fx:id=\"txt_contrasenia\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
-        assert txt_nombreUsuario != null : "fx:id=\"txt_nombreUsuario\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
-        assert txt_registarse != null : "fx:id=\"txt_registarse\" was not injected: check your FXML file 'iniciarSesionView.fxml'.";
 
     }
 

@@ -9,7 +9,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="1161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="txt_bienvenida" layoutX="14.0" layoutY="21.0" prefHeight="60.0" prefWidth="402.0" style="-fx-background-color: #487ad7; -fx-background-radius: 5px;" text="   Bienvenido, Dr. &quot;MedicoName&quot;" textFill="WHITE">
@@ -52,7 +51,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btn_historialPacientes" layoutX="687.0" layoutY="396.0" mnemonicParsing="false" onAction="#abrirVIewHisotiralPacientes" prefHeight="26.0" prefWidth="216.0" style="-fx-background-radius: 20; -fx-background-color: #487ad7;" text="Obtener historial del paciente" textFill="WHITE">
+      <Button fx:id="btn_historialPacientes" layoutX="687.0" layoutY="396.0" mnemonicParsing="false" onAction="#abrirViewHistorialPacientes" prefHeight="26.0" prefWidth="216.0" style="-fx-background-radius: 20; -fx-background-color: #487ad7;" text="Obtener historial del paciente" textFill="WHITE">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>

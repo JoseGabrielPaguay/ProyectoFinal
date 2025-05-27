@@ -4,41 +4,31 @@ import java.io.Serializable;
 
 public class Diagnostico implements Serializable {
 
-    private String cedulaPaciente;
-    private String nombrePaciente;
-    private String tratamiento;
+    private Medico medico;
+    private Paciente paciente;
     private String descripcion;
 
 
-    public Diagnostico(String cedulaPaciente, String nombrePaciente, String tratamiento, String descripcion) {
-        this.cedulaPaciente = cedulaPaciente;
-        this.nombrePaciente = nombrePaciente;
-        this.tratamiento = tratamiento;
+    public Diagnostico(Medico medico, Paciente paciente, String descripcion) {
+        this.medico = medico;
+        this.paciente = paciente;
         this.descripcion = descripcion;
     }
 
-    public String getCedulaPaciente() {
-        return cedulaPaciente;
+    public Medico getMedico() {
+        return medico;
     }
 
-    public void setCedulaPaciente(String cedulaPaciente) {
-        this.cedulaPaciente = cedulaPaciente;
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
-    public String getNombrePaciente() {
-        return nombrePaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
-    public String getTratamiento() {
-        return tratamiento;
-    }
-
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
     public String getDescripcion() {

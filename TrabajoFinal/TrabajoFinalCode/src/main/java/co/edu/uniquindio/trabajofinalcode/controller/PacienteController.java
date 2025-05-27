@@ -14,9 +14,9 @@ public class PacienteController {
         this.hospital = hospital;
     }
 
-    public void registrarCita(LocalDate fecha, String hora, String motivo, String notasPrevias){
+    public void registrarCita(LocalDate fecha, String hora, String motivo, String notasPrevias, String idPaciente){
         try{
-            hospital.registrarCitaMedica(fecha, hora, motivo, notasPrevias);
+            hospital.registrarCitaMedica(fecha, hora, motivo, notasPrevias, idPaciente);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +39,7 @@ public class PacienteController {
     }
 
     public LinkedList<String> getHorarios(){
-
+        return hospital.;
     }
 
 

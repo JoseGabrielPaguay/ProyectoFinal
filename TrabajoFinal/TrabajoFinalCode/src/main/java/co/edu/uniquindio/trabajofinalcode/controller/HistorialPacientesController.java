@@ -1,23 +1,22 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
-import co.edu.uniquindio.trabajofinalcode.model.Diagnostico;
+import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
-import co.edu.uniquindio.trabajofinalcode.model.Paciente;
 
 import java.util.LinkedList;
 
-public class DiagnosticosController {
-
+public class HistorialPacientesController {
     Hospital hospital;
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
     }
 
-    public LinkedList<Diagnostico> obtenerDiagnosticoPaciente(Paciente paciente){
+    public LinkedList<CitaMedica> obtenerCitasPaciente(String idPaciente){
         try{
-            return hospital.obtenerDiagnosticosPaciente(paciente);
+            return hospital.obtenerCitasPaciente(idPaciente);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 }
+

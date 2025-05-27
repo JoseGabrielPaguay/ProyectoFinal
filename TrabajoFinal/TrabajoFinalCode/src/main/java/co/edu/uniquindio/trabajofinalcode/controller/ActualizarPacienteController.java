@@ -1,8 +1,6 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
-import co.edu.uniquindio.trabajofinalcode.model.Hospital;
-
-import javax.xml.stream.events.StartElement;
+import co.edu.uniquindio.trabajofinalcode.model.*;
 
 public class ActualizarPacienteController {
     Hospital hospital;
@@ -18,4 +16,6 @@ public class ActualizarPacienteController {
             throw new RuntimeException(e);
         }
     }
+
+
 }

@@ -69,6 +69,8 @@ public class App extends Application {
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             PacienteViewController pacienteViewController = loader.getController();
             pacienteViewController.setApp(this);
+            pacienteViewController.setPaciente(paciente);
+            pacienteViewController.inicializarVista();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -104,6 +106,7 @@ public class App extends Application {
             MedicoViewController medicoViewController = loader.getController();
             medicoViewController.setApp(this);
             medicoViewController.setMedico(medico);
+            medicoViewController.inicializarVista();
 
 
             Scene scene = new Scene(rootLayout);
@@ -133,13 +136,14 @@ public class App extends Application {
         }
     }
 
-    public void openViewHorariosMedicoView() {
+    public void openViewHorariosMedicoView(Medico medico) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("horariosMedico.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             HorariosMedicoViewController horariosMedicoViewController = loader.getController();
             horariosMedicoViewController.setApp(this);
+            horariosMedicoViewController.setMedico(medico);
 
 
             Scene scene = new Scene(rootLayout);
@@ -178,6 +182,7 @@ public class App extends Application {
             AdministradorViewController administradorViewController = loader.getController();
             administradorViewController.setApp(this);
             administradorViewController.setAdministrador(administrador);
+            administradorViewController.inicializarVista();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -188,13 +193,33 @@ public class App extends Application {
         }
     }
 
-    public void openViewDiagnosticosView() {
+    public void openViewDiagnosticosView(Paciente paciente) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("diagnosticosView.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             DiagnosticosViewController diagnosticosViewController = loader.getController();
             diagnosticosViewController.setApp(this);
+            diagnosticosViewController.inicializarVista();
+
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void openViewHistorialPacientesView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("historialPacientesView.fxml"));
+            javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
+            HistorialPacientesViewController historialPacientesViewController = loader.getController();
+            historialPacientesViewController.setApp(this);
+            historialPacientesViewController.inicializarVista();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);

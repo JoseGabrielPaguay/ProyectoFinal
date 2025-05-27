@@ -6,10 +6,7 @@ import co.edu.uniquindio.trabajofinalcode.util.Persistencia;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class Hospital {
     public String nombre;
@@ -62,6 +59,69 @@ public class Hospital {
         this.listCitasMedicas = listCitasMedicas;
     }
 
+    public LinkedList<Medico> listarMedicosHospital() {
+        return listMedicos;
+    }
+
+    public LinkedList<Paciente> listarPacientesHospital() {
+        return listPacientes;
+    }
+
+    public LinkedList<CitaMedica> listarCitasHospital() {
+        return listCitasMedicas;
+    }
+
+    public LinkedList<Sala> listarSalasHospital() {
+        return listSalas;
+    }
+
+    public LinkedList<GrupoSanguineo> listarGruposSanguineos(){
+        return new LinkedList<>(Arrays.asList(GrupoSanguineo.values()));
+    }
+
+    public LinkedList<EspecialidadMedica> listarEspecialidadesMedicas(){
+        return new LinkedList<>(Arrays.asList(EspecialidadMedica.values()));
+    }
+
+    public  LinkedList<Diagnostico> obtenerDiagnosticosPaciente(Paciente paciente) throws Exception{
+        LinkedList<Diagnostico> lista = new LinkedList<>();
+        for(Diagnostico diagnostico : listDiagnosticos){
+            if(diagnostico.getPaciente().getCedula().equals(paciente.getCedula())){
+                lista.add(diagnostico);
+            }
+        }
+        if(lista.isEmpty()){
+            throw new Exception("El paciente no tiene diagnosticos asignados");
+        }
+        return lista;
+    }
+
+    public LinkedList<CitaMedica> obtenerCitasPaciente(String idPaciente) throws Exception{
+        LinkedList<CitaMedica> lista = new LinkedList<>();
+        for(CitaMedica citaMedica : listCitasMedicas){
+            if(citaMedica.getPaciente().getCedula().equals(idPaciente)){
+                lista.add(citaMedica);
+            }
+        }
+        if(lista.isEmpty()){
+            throw new Exception("El paciente no tiene ninguna cita");
+        }
+        return lista;
+    }
+
+    public LinkedList<Paciente> obtenerListaPacientesMedico(String idMedico) throws Exception{
+        LinkedList<Paciente> lista = new LinkedList<>();
+        for(CitaMedica citaMedica : listCitasMedicas){
+            if(citaMedica.getMedico().getCedula().equals(idMedico)){
+                lista.add(citaMedica.getPaciente());
+            }
+        }
+        if(lista.isEmpty()){
+            throw new Exception("El medico no tiene asignado ningun paciente");
+        }
+        return lista;
+    }
+
     /**
      * Metodo que elige una sala al azar
      * @return
@@ -79,7 +139,7 @@ public class Hospital {
         return null;
     }
 
-    public void setHorarioMedico(String horarioMedico, String cedulaMedico) throws Exception{
+    public void setHorarioMedico(Horario horarioMedico, String cedulaMedico) throws Exception{
         for(Medico medico : listMedicos){
             if(medico.getCedula().equals(cedulaMedico)){
                 medico.setHorario(horarioMedico);
@@ -261,29 +321,60 @@ public class Hospital {
     /**
      * Método que registra un nuevo diagnóstico
      * @param cedulaPaciente
-     * @param nombrePaciente
-     * @param tratamiento
+     * @param cedulaMedico
      * @param descripcion
      * @throws Exception
      */
-    public void registrarDiagnostico(String cedulaPaciente, String nombrePaciente, String tratamiento, String descripcion) throws Exception {
+    public void registrarDiagnostico(String cedulaMedico, String cedulaPaciente, String descripcion) throws Exception {
 
         if (cedulaPaciente == null || cedulaPaciente.isBlank()) {
             throw new Exception("la cedula del paciente es necesaria");
-        }
-        if (nombrePaciente == null || nombrePaciente.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
-        }
-        if (tratamiento == null || tratamiento.isBlank()) {
-            throw new Exception("El tipo de tratamiento es necesario");
         }
         if (descripcion == null || descripcion.isBlank()) {
             throw new Exception("La descripcion del diagnostico  es necesaria");
         }
 
-        Diagnostico diagnostico = new Diagnostico(cedulaPaciente, nombrePaciente, tratamiento, descripcion);
+        Paciente paciente = obtenerPacienteCedula(cedulaPaciente);
+        Medico medico = obtenerMedicoCedula(cedulaMedico);
+
+        if(medico == null){
+            throw new Exception("Medico no encontrado");
+        }
+        if(paciente == null){
+            throw new Exception("paciente no encontrado");
+        }
+
+        Diagnostico diagnostico = new Diagnostico(medico, paciente, descripcion);
         listDiagnosticos.add(diagnostico);
         guardarDatosDiagnosticos(listDiagnosticos);
+    }
+
+    /**
+     * método que obtiene un paciente por su cedula
+     * @param cedulaPaciente
+     * @return
+     */
+    public Paciente obtenerPacienteCedula(String cedulaPaciente){
+        for(Paciente paciente : listPacientes){
+            if (paciente.getCedula().equals(cedulaPaciente)){
+                return paciente;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * método que obtiene un medico por su cédula
+     * @param cedulaMedico
+     * @return
+     */
+    public Medico obtenerMedicoCedula(String cedulaMedico){
+        for(Medico medico : listMedicos){
+            if(medico.getCedula().equals(cedulaMedico)){
+                return medico;
+            }
+        }
+        return null;
     }
 
     /**
@@ -301,31 +392,31 @@ public class Hospital {
      */
     public void registrarPaciente(String nombre, String apellido, String cedula, String telefono, String eps, LocalDate fechaNacimiento, GrupoSanguineo grupoSanguineo, String correo, String contrasena) throws Exception {
         if (nombre == null || nombre.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("El nombre del paciente es necesario");
         }
         if (apellido == null || apellido.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("El apellido del paciente es necesario");
         }
         if (cedula == null || cedula.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("La cedula del paciente es necesaria");
         }
         if (telefono == null || telefono.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("El telefono del paciente es necesario");
         }
         if (eps == null || eps.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("La eps del paciente es necesaria");
         }
         if (fechaNacimiento == null ) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("La fecha de naciemiento del paciente es necesaria");
         }
         if (grupoSanguineo == null ) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("El grupo sanguineo del paciente es necesario");
         }
         if (correo == null || correo.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("El correo del paciente es necesario");
         }
         if (contrasena == null || contrasena.isBlank()) {
-            throw new Exception("El nombre del paciente es necsario");
+            throw new Exception("la contraseña del paciente es necesaria");
         }
         Paciente paciente = new Paciente(nombre, apellido, cedula,correo,telefono,fechaNacimiento,grupoSanguineo,eps,contrasena);
         listPacientes.add(paciente);
@@ -365,25 +456,71 @@ public class Hospital {
      * @param correo
      * @throws Exception
      */
-    public void actualizarPaciente(String cedula, String nombre, String apellido, String eps,String telefono, String correo) throws Exception {
+    public void actualizarPacienteAdmin(String cedula, String nombre, String apellido, String eps, String telefono, String correo, LocalDate fechaNacimiento, GrupoSanguineo tipoSangre) throws Exception {
         if (cedula == null || cedula.isBlank()) {
             throw new Exception("La cédula del paciente es obligatoria");
         }
         if (nombre == null || nombre.isBlank()) {
-            throw new Exception("La cédula del paciente es obligatoria");
+            throw new Exception("El nombre del paciente es obligatorio");
         }
         if (apellido == null || apellido.isBlank()) {
-            throw new Exception("La cédula del paciente es obligatoria");
+            throw new Exception("El apellido del paciente es obligatorio");
         }
         if (eps == null || eps.isBlank()) {
-            throw new Exception("La cédula del paciente es obligatoria");
+            throw new Exception("La EPS del paciente es obligatoria");
         }
         if (telefono == null || telefono.isBlank()) {
-            throw new Exception("La cédula del paciente es obligatoria");
+            throw new Exception("El telefono del paciente es obligatorio");
         }
         if (correo == null || correo.isBlank()) {
+            throw new Exception("El correo del paciente es obligatorio");
+        }
+        if (tipoSangre == null) {
+            throw new Exception("El tipo de sangre del paciente es obligatorio");
+        }
+        if (fechaNacimiento == null) {
+            throw new Exception("La fecha de nacimiento del paciente es obligatoria");
+        }
+
+        boolean actualizado = false;
+        for (Paciente paciente : listPacientes) {
+            if (paciente.getCedula().equals(cedula)) {
+                paciente.setNombre(nombre);
+                paciente.setApellido(apellido);
+                paciente.setEps(eps);
+                paciente.setTelefono(telefono);
+                paciente.setCorreo(correo);
+                paciente.setFechaNacimiento(fechaNacimiento);
+                paciente.setTipoSangre(tipoSangre);
+                actualizado = true;
+                guardarDatosPacientes(listPacientes);
+                break;
+            }
+        }
+        if (!actualizado) {
+            throw new Exception("No se encontró un paciente con la cédula proporcionada para actualizar");
+        }
+    }
+    public void actualizarPaciente(String cedula, String nombre, String apellido, String eps, String telefono, String correo) throws Exception {
+        if (cedula == null || cedula.isBlank()) {
             throw new Exception("La cédula del paciente es obligatoria");
         }
+        if (nombre == null || nombre.isBlank()) {
+            throw new Exception("El nombre del paciente es obligatorio");
+        }
+        if (apellido == null || apellido.isBlank()) {
+            throw new Exception("El apellido del paciente es obligatorio");
+        }
+        if (eps == null || eps.isBlank()) {
+            throw new Exception("La EPS del paciente es obligatoria");
+        }
+        if (telefono == null || telefono.isBlank()) {
+            throw new Exception("El telefono del paciente es obligatorio");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new Exception("El correo del paciente es obligatorio");
+        }
+
         boolean actualizado = false;
         for (Paciente paciente : listPacientes) {
             if (paciente.getCedula().equals(cedula)) {
@@ -472,28 +609,42 @@ public class Hospital {
 
     }
 
-    /**
-     * Método que actuliza los dátos de un médico
-     * @param cedula
-     * @param medicoActualizado
-     * @throws Exception
-     */
-    public void actualizarMedico(String cedula, Medico medicoActualizado) throws Exception {
-        if (cedula == null || cedula.isBlank()) {
-            throw new Exception("La cédula del medico es obligatoria");
+
+    public void actualizarMedico(String nombre, String apellido, String cedula, String telefono, LocalDate fechaNacimiento,EspecialidadMedica especialidadMedica, String correo, String numeroLicencia) throws Exception {
+        if (nombre == null || nombre.isBlank()) {
+            throw new Exception("El nombre del Medico es necsario");
         }
-        if (medicoActualizado == null) {
-            throw new Exception("El médico actualizado no puede ser nulo");
+        if (apellido == null || apellido.isBlank()) {
+            throw new Exception("El apellido del medico es necsario");
+        }
+        if (cedula == null || cedula.isBlank()) {
+            throw new Exception("La cedula del medico es necsaria");
+        }
+        if (telefono == null || telefono.isBlank()) {
+            throw new Exception("El telefono del medico es necsario");
+        }
+        if (numeroLicencia == null || numeroLicencia.isBlank()) {
+            throw new Exception("El numero de licencia del medico es necsario");
+        }
+        if (fechaNacimiento == null ) {
+            throw new Exception("La fecha de nacimiento del medico es necearia");
+        }
+        if (especialidadMedica == null ) {
+            throw new Exception("La especialidad Medica es necesaria");
+        }
+        if (correo == null || correo.isBlank()) {
+            throw new Exception("El correo del Medico es necsario");
         }
         boolean actualizado = false;
         for (Medico medico : listMedicos) {
             if (medico.getCedula().equals(cedula)) {
-                medico.setNombre(medicoActualizado.getNombre());
-                medico.setApellido(medicoActualizado.getApellido());
-                medico.setCorreo(medico.getCorreo());
-                medico.setTelefono(medico.getTelefono());
-                medico.setEspecialidad(medicoActualizado.getEspecialidad());
-                medico.setContrasena(medicoActualizado.getContrasena());
+                medico.setNombre(nombre);
+                medico.setApellido(apellido);
+                medico.setCorreo(correo);
+                medico.setTelefono(telefono);
+                medico.setEspecialidad(especialidadMedica);
+                medico.setFechaNacimiento(fechaNacimiento);
+                medico.setNumeroLicencia(numeroLicencia);
                 actualizado = true;
                 guardarDatosPacientes(listPacientes);
                 break;
@@ -512,6 +663,10 @@ public class Hospital {
     public void registrarSala(String numeroSala) throws Exception {
         if (numeroSala == null || numeroSala.isBlank()) {
             throw new Exception("El numero de sala es necesario");
+        }
+        for(Sala sala : listSalas){
+            if(sala.getNumeroSala().equals(numeroSala))
+                throw new Exception("Ya existe una sala con este numero");
         }
         Sala sala = new Sala(numeroSala);
         listSalas.add(sala);
@@ -544,11 +699,12 @@ public class Hospital {
         String id = UUID.randomUUID().toString();
         Sala sala = elegirSalaRandom();
         Paciente paciente =buscarPacienteCedula(idPaciente);
-        Medico medico= obtenerMedicoDisponible(String hora);
-        CitaMedica citaMedica = new CitaMedica(id, fecha, hora, motivo, notasPrevias, sala, paciente, medico);
-        listCitasMedicas.add(citaMedica);
+        //Medico medico= obtenerMedicoDisponible();
+        //CitaMedica citaMedica = new CitaMedica(id, fecha, hora, motivo, notasPrevias, sala, paciente, medico);
+        //listCitasMedicas.add(citaMedica);
         guardarDatosCitas(listCitasMedicas);
     }
+
 
     public Paciente buscarPacienteCedula(String cedula) throws Exception {
         if (cedula == null || cedula.isBlank()) {
@@ -654,9 +810,6 @@ public class Hospital {
                 lista.add(citaMedica);
             }
         }
-        if(lista.isEmpty()){
-            throw new Exception("El paciente no tiene citas qus mostrar");
-        }
         return lista;
     }
 
@@ -666,15 +819,17 @@ public class Hospital {
      */
     public LinkedList<String> horariosAElegirMedico(){
         LinkedList<String> listaHorariosMedico= new LinkedList<>();
-        listaHorariosMedico.add("6:00am-2:00pm");
-        listaHorariosMedico.add("2:00pm-10:00pm");
-        listaHorariosMedico.add("10:00pm-6:00am");
+        listaHorariosMedico.add("6:00-14:00");
+        listaHorariosMedico.add("14:00-22:00");
+        listaHorariosMedico.add("22:00-6:00");
         return listaHorariosMedico;
     }
 
-  public Medico obtenerMedicoDisponible(String Cedula){
 
-  }
+  //public Medico obtenerMedicoDisponible(String Cedula){
+       // return medico;
+
+  //}
     /**
      * Método para leer los datos de los pacientes
      *

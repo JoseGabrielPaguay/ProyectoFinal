@@ -51,18 +51,14 @@ public class IngresarCodigoViewController {
             try{
                 ingresarCodigoController.cambiarContrasena(codigo, contrasenaNueva, correoUsuario);
             } catch (Exception e) {
-                throw new RuntimeException(e);
                 mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
             }
 
         }
 
         @FXML // This method is called by the FXMLLoader when initialization is complete
         void initialize() {
-            assert btn_aceptar != null : "fx:id=\"btn_aceptar\" was not injected: check your FXML file 'ingresarCodigoView.fxml'.";
-            assert txt_codigoVerificacion != null : "fx:id=\"txt_codigoVerificacion\" was not injected: check your FXML file 'ingresarCodigoView.fxml'.";
-            assert txt_contrasenaNueva != null : "fx:id=\"txt_contrasenaNueva\" was not injected: check your FXML file 'ingresarCodigoView.fxml'.";
-
         }
 
     // Método para mostrar alertas

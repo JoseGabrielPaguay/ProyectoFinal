@@ -9,6 +9,8 @@ import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.PacienteController;
 import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
 import co.edu.uniquindio.trabajofinalcode.model.Paciente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -88,33 +90,58 @@ public class PacienteViewController {
         @FXML // fx:id="txt_verDiagnosticos"
         private Label txt_verDiagnosticos; // Value injected by FXMLLoader
 
-        @FXML
-        void abrirActualizarPacienteView(MouseEvent event) {
+    private ObservableList<CitaMedica> observableList;
 
-            app.openViewActualizarPacienteView(paciente);
-
+    public void inicializarVista(){
+        if(paciente != null){
+            cargarCitas(paciente);
         }
+    }
 
-        @FXML
-        void abrirDiagnosticosView(MouseEvent event) {
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        column_fecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFecha().toString()));
+        column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora()));
+        column_id.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCita()));
+        column_motivo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotivo()));
+        column_sala.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSala().getNumeroSala()));
+        column_notasPrevias.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNotasPrevias()));
 
-            app.openViewDiagnosticosView();
+        observableList = FXCollections.observableArrayList();
+        tbl_listaCitas.setItems(observableList);
+        
+        LinkedList<String> horas = pacienteController.getHorarios();
+        cbx_horaCita.getItems().addAll(horas);
 
+    }
+
+    @FXML
+    void abrirActualizarPacienteView(MouseEvent event) {
+
+        app.openViewActualizarPacienteView(paciente);
+
+    }
+
+    @FXML
+    void abrirDiagnosticosView(MouseEvent event) {
+
+        app.openViewDiagnosticosView(paciente);
+
+    }
+
+    @FXML
+    void agregarCitaAction(ActionEvent event) {
+        LocalDate fecha = dp_fechaCita.getValue();
+        String hora = cbx_horaCita.getValue();
+        String notasPrevias = txt_notasPreviasCita.getText();
+        String motivo = txt_motivoCita.getText();
+        try{
+            pacienteController.registrarCita(fecha, hora, motivo, notasPrevias, paciente.getCedula());
+        } catch (Exception e) {
+            mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
         }
-
-        @FXML
-        void agregarCitaAction(ActionEvent event) {
-            LocalDate fecha = dp_fechaCita.getValue();
-            String hora = cbx_horaCita.getValue();
-            String notasPrevias = txt_notasPreviasCita.getText();
-            String motivo = txt_motivoCita.getText();
-            try{
-                pacienteController.registrarCita(fecha, hora, motivo, notasPrevias);
-            } catch (Exception e) {
-                mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
-                throw new RuntimeException(e);
-            }
-        }
+    }
 
     // Método para obtener el objeto seleccionado de la tabla
     public void obtenerCitaSeleccionada() {
@@ -136,23 +163,14 @@ public class PacienteViewController {
             LinkedList<CitaMedica> citasMedicas = pacienteController.obtenerListaCitasPacinete(paciente.getCedula());
 
             tbl_listaCitas.getItems().clear();
-            tbl_listaCitas.getItems().addAll(citasMedicas);
+            observableList.setAll(citasMedicas);
+        }
+
+        public void cargarHorasCitas(){
+        pacienteController.getHorarios();
         }
 
 
-        @FXML // This method is called by the FXMLLoader when initialization is complete
-        void initialize() {
-            column_fecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFecha().toString()));
-            column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora()));
-            column_id.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCita()));
-            column_motivo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotivo()));
-            column_sala.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSala().getNumeroSala()));
-            column_notasPrevias.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNotasPrevias()));
-
-            LinkedList<String> horas = pacienteController.getHorarios();
-            cbx_horaCita.getItems().addAll(horas);
-
-        }
     // Método para mostrar alertas
     public void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);

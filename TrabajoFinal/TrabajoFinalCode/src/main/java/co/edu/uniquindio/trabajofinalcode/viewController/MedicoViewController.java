@@ -1,18 +1,20 @@
 package co.edu.uniquindio.trabajofinalcode.viewController;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.MedicoController;
+import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
 import co.edu.uniquindio.trabajofinalcode.model.Medico;
+import co.edu.uniquindio.trabajofinalcode.model.Paciente;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -44,28 +46,28 @@ public class MedicoViewController {
     private Button btn_historialPacientes; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_apellido"
-    private TableColumn<?, ?> column_apellido; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_apellido; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_cedula"
-    private TableColumn<?, ?> column_cedula; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_cedula; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_correo"
-    private TableColumn<?, ?> column_correo; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_correo; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_eps"
-    private TableColumn<?, ?> column_eps; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_eps; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_fechaNacimiento"
-    private TableColumn<?, ?> column_fechaNacimiento; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_fechaNacimiento; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_nombre"
-    private TableColumn<?, ?> column_nombre; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_nombre; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_telefono"
-    private TableColumn<?, ?> column_telefono; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_telefono; // Value injected by FXMLLoader
 
     @FXML // fx:id="column_tipoSangre"
-    private TableColumn<?, ?> column_tipoSangre; // Value injected by FXMLLoader
+    private TableColumn<Paciente, String> column_tipoSangre; // Value injected by FXMLLoader
 
     @FXML // fx:id="lbl_gestionarHorariosMedico"
     private Label lbl_gestionarHorariosMedico; // Value injected by FXMLLoader
@@ -74,7 +76,7 @@ public class MedicoViewController {
     private AnchorPane rootPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="tbl_listaPacientes"
-    private TableView<?> tbl_listaPacientes; // Value injected by FXMLLoader
+    private TableView<Paciente> tbl_listaPacientes; // Value injected by FXMLLoader
 
     @FXML // fx:id="txt_bienvenida"
     private Label txt_bienvenida; // Value injected by FXMLLoader
@@ -85,41 +87,67 @@ public class MedicoViewController {
     @FXML // fx:id="txt_diagnosticoPaciente"
     private TextField txt_diagnosticoPaciente; // Value injected by FXMLLoader
 
-    @FXML
-    void abrirVIewHisotiralPacientes(ActionEvent event) {
+    private ObservableList<Paciente> observableList;
 
+    public void inicializarVista(){
+        if(medico != null){
+            cargarPacientes(medico);
+        }
+    }
+
+    @FXML
+    void abrirViewHistorialPacientes(ActionEvent event) {
+        app.openViewHistorialPacientesView();
     }
 
     @FXML
     void abrirgestionHorariosView(MouseEvent event) {
-
+        app.openViewHorariosMedicoView(medico);
+        
     }
 
     @FXML
     void crearDiagnostico(ActionEvent event) {
-
+        String cedula = txt_cedulaPaciente.getText();
+        String diagnostico = txt_diagnosticoPaciente.getText();
+        try{
+            medicoController.registrarDiagnostico(cedula, diagnostico);
+        } catch (Exception e) {
+            mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert btn_generarDiagnostico != null : "fx:id=\"btn_generarDiagnostico\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert btn_historialPacientes != null : "fx:id=\"btn_historialPacientes\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_apellido != null : "fx:id=\"column_apellido\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_cedula != null : "fx:id=\"column_cedula\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_correo != null : "fx:id=\"column_correo\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_eps != null : "fx:id=\"column_eps\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_fechaNacimiento != null : "fx:id=\"column_fechaNacimiento\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_nombre != null : "fx:id=\"column_nombre\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_telefono != null : "fx:id=\"column_telefono\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert column_tipoSangre != null : "fx:id=\"column_tipoSangre\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert lbl_gestionarHorariosMedico != null : "fx:id=\"lbl_gestionarHorariosMedico\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert rootPane != null : "fx:id=\"rootPane\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert tbl_listaPacientes != null : "fx:id=\"tbl_listaPacientes\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert txt_bienvenida != null : "fx:id=\"txt_bienvenida\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert txt_cedulaPaciente != null : "fx:id=\"txt_cedulaPaciente\" was not injected: check your FXML file 'medicoView.fxml'.";
-        assert txt_diagnosticoPaciente != null : "fx:id=\"txt_diagnosticoPaciente\" was not injected: check your FXML file 'medicoView.fxml'.";
+        column_nombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        column_apellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+        column_cedula.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCedula()));
+        column_correo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCorreo()));
+        column_telefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
+        column_eps.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEps()));
+        column_fechaNacimiento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaNacimiento().toString()));
+        column_tipoSangre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
 
+
+        observableList = FXCollections.observableArrayList();
+        tbl_listaPacientes.setItems(observableList);
     }
 
+    public void cargarPacientes(Medico medico){
+        LinkedList<Paciente> pacientes = medicoController.cargarListaPacientes(medico.getCedula());
+
+        tbl_listaPacientes.getItems().clear();
+        observableList.setAll(pacientes);
+    }
+
+    // Método para mostrar alertas
+    public void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
 }
 

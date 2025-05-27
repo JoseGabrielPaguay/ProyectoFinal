@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.trabajofinalcode.viewController.HistorialPacientesViewController">
+   <children>
+      <Label layoutX="161.0" layoutY="7.0" prefHeight="62.0" prefWidth="413.0" style="-fx-background-color: #487ad7; -fx-background-radius: 5;" text="    Historial del Paciente" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tbl_historialCitas" layoutY="76.0" prefHeight="300.0" prefWidth="735.0">
+        <columns>
+          <TableColumn fx:id="column_diCita" prefWidth="89.60000610351562" text="ID cita" />
+          <TableColumn fx:id="column_fecha" prefWidth="70.39999389648438" text="Fecha" />
+            <TableColumn fx:id="column_hora" prefWidth="79.99993896484375" text="Hora" />
+            <TableColumn fx:id="column_motivo" prefWidth="75.20001220703125" text="Motivo" />
+            <TableColumn fx:id="column_notasPrevias" prefWidth="121.60003662109375" text="Notas Previas " />
+            <TableColumn fx:id="column_sala" prefWidth="97.59991455078125" text="Sala" />
+            <TableColumn fx:id="column_paciente" prefWidth="91.20001220703125" text="Paciente" />
+            <TableColumn fx:id="column_medico" prefWidth="111.199951171875" text="Médico" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
