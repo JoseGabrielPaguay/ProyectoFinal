@@ -14,10 +14,6 @@ public class DiagnosticosController {
     }
 
     public LinkedList<Diagnostico> obtenerDiagnosticoPaciente(Paciente paciente){
-        try{
-            return hospital.obtenerDiagnosticosPaciente(paciente);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return hospital.obtenerDiagnosticosPaciente(paciente);
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="1161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="1161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.trabajofinalcode.viewController.MedicoViewController">
    <children>
       <Label fx:id="txt_bienvenida" layoutX="14.0" layoutY="21.0" prefHeight="60.0" prefWidth="402.0" style="-fx-background-color: #487ad7; -fx-background-radius: 5px;" text="   Bienvenido, Dr. &quot;MedicoName&quot;" textFill="WHITE">
          <font>

@@ -9,11 +9,13 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class App extends Application {
 
     private Stage primaryStage;
     Hospital hospital = new Hospital("UQ");
+
 
     public Hospital getHospital() {
         return hospital;
@@ -81,23 +83,6 @@ public class App extends Application {
         }
     }
 
-    public void openViewRecuperarContrasenaView() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("cambiarContrasenaView.fxml"));
-            javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
-            RecuperarContrasenaViewController recuperarContrasenaViewController = loader.getController();
-            recuperarContrasenaViewController.setApp(this);
-
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
     public void openViewMedicoView(Medico medico) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -118,14 +103,14 @@ public class App extends Application {
         }
     }
 
-    public void openViewIngresarCodigoView(Usuario usuario) {
+    public void openViewCambiarContrasenaView(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("ingresarCodigoView.fxml"));
+            loader.setLocation(App.class.getResource("cambiarContrasenaView.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
-            IngresarCodigoViewController ingresarCodigoViewController = loader.getController();
-            ingresarCodigoViewController.setApp(this);
-            ingresarCodigoViewController.setUsuario(usuario);
+            CambiarContrasenaViewController cambiarContrasenaViewController = loader.getController();
+            cambiarContrasenaViewController.setApp(this);
+            cambiarContrasenaViewController.setUsuario(usuario);
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -139,11 +124,12 @@ public class App extends Application {
     public void openViewHorariosMedicoView(Medico medico) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("horariosMedico.fxml"));
+            loader.setLocation(App.class.getResource("horariosMedicoView.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             HorariosMedicoViewController horariosMedicoViewController = loader.getController();
             horariosMedicoViewController.setApp(this);
             horariosMedicoViewController.setMedico(medico);
+            horariosMedicoViewController.inicializar();
 
 
             Scene scene = new Scene(rootLayout);
@@ -200,6 +186,7 @@ public class App extends Application {
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             DiagnosticosViewController diagnosticosViewController = loader.getController();
             diagnosticosViewController.setApp(this);
+            diagnosticosViewController.setPaciente(paciente);
             diagnosticosViewController.inicializarVista();
 
 
@@ -212,14 +199,32 @@ public class App extends Application {
         }
     }
 
-    public void openViewHistorialPacientesView() {
+    public void openViewHistorialPacientesView(Paciente paciente) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("historialPacientesView.fxml"));
             javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
             HistorialPacientesViewController historialPacientesViewController = loader.getController();
             historialPacientesViewController.setApp(this);
+            historialPacientesViewController.setPaciente(paciente);
             historialPacientesViewController.inicializarVista();
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void openViewEnviarCodigoContrasenaView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("enviarCodigoContrasenaView.fxml"));
+            javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
+            EnviarCodigoContrasenaViewController enviarCodigoContrasenaViewController = loader.getController();
+            enviarCodigoContrasenaViewController.setApp(this);
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);

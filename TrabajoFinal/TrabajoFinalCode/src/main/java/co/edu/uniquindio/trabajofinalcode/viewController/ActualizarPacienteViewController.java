@@ -62,6 +62,8 @@ public class ActualizarPacienteViewController {
 
         try{
             actualizarPacienteController.actualizarPaciente(paciente.getCedula(), nombre, apellido, eps, telefono, correo);
+            mostrarAlerta("Información actualizada correctamente, vuelva a iniciar sesión", Alert.AlertType.CONFIRMATION);
+            app.openViewPacienteView(paciente);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
@@ -81,7 +83,6 @@ public class ActualizarPacienteViewController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
 }
 
 

@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.MedicoController;
-import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
 import co.edu.uniquindio.trabajofinalcode.model.Medico;
 import co.edu.uniquindio.trabajofinalcode.model.Paciente;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +22,7 @@ public class MedicoViewController {
     App app;
     MedicoController medicoController = new MedicoController();
     Medico medico;
+    Paciente selectedPaciente;
 
     public void setApp(App app) {
         this.app = app;
@@ -92,18 +92,20 @@ public class MedicoViewController {
     public void inicializarVista(){
         if(medico != null){
             cargarPacientes(medico);
+            txt_bienvenida.setText("Bienvenido, Dr. " + medico.getNombre());
+
         }
     }
 
     @FXML
     void abrirViewHistorialPacientes(ActionEvent event) {
-        app.openViewHistorialPacientesView();
+        obtenerPacienteSeleccionado();
+        app.openViewHistorialPacientesView(selectedPaciente);
     }
 
     @FXML
     void abrirgestionHorariosView(MouseEvent event) {
         app.openViewHorariosMedicoView(medico);
-        
     }
 
     @FXML
@@ -112,6 +114,7 @@ public class MedicoViewController {
         String diagnostico = txt_diagnosticoPaciente.getText();
         try{
             medicoController.registrarDiagnostico(cedula, diagnostico);
+            mostrarAlerta("Diagnostico creado con exito", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
@@ -148,6 +151,13 @@ public class MedicoViewController {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    public void obtenerPacienteSeleccionado() {
+        Paciente selectedItem = tbl_listaPacientes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            this.selectedPaciente = selectedItem;
+        }
     }
 }
 

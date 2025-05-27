@@ -47,7 +47,7 @@ public class InicioSesionViewController {
 
     @FXML
     void abrirOlvidasteContraseniaView(MouseEvent event) {
-        app.openViewRecuperarContrasenaView();
+        app.openViewEnviarCodigoContrasenaView();
     }
 
     @FXML
@@ -63,6 +63,7 @@ public class InicioSesionViewController {
         if(usuario instanceof Paciente){
             try{
                 if(inicioSesionController.iniciarSesion(correo, contrasena)){
+                    mostrarAlerta("Sesión iniciada como paciente", Alert.AlertType.CONFIRMATION);
                     app.openViewPacienteView((Paciente) usuario);
                 }
             } catch (Exception e) {
@@ -73,6 +74,7 @@ public class InicioSesionViewController {
         if(usuario instanceof Medico){
             try{
                 if(inicioSesionController.iniciarSesion(correo, contrasena)){
+                    mostrarAlerta("Sesión iniciada como medico", Alert.AlertType.CONFIRMATION);
                     app.openViewMedicoView((Medico) usuario);
                 }
             } catch (Exception e) {
@@ -84,6 +86,8 @@ public class InicioSesionViewController {
             try{
                 if(inicioSesionController.iniciarSesion(correo, contrasena)){
                     app.openViewAdministradorView((Administrador) usuario);
+                    mostrarAlerta("Sesión iniciada como admnistrador", Alert.AlertType.CONFIRMATION);
+
                 }
             } catch (Exception e) {
                 mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);

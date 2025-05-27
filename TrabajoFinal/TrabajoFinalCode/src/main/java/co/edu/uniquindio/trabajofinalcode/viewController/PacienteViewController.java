@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+import co.edu.uniquindio.trabajofinalcode.model.Horario;
 import javafx.beans.property.SimpleStringProperty;
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.PacienteController;
@@ -46,7 +47,7 @@ public class PacienteViewController {
         private Button btn_solicitarCita; // Value injected by FXMLLoader
 
         @FXML // fx:id="cbx_horaCita"
-        private ComboBox<String> cbx_horaCita; // Value injected by FXMLLoader
+        private ComboBox<Horario> cbx_horaCita; // Value injected by FXMLLoader
 
         @FXML // fx:id="column_fecha"
         private TableColumn<CitaMedica, String> column_fecha; // Value injected by FXMLLoader
@@ -91,17 +92,21 @@ public class PacienteViewController {
         private Label txt_verDiagnosticos; // Value injected by FXMLLoader
 
     private ObservableList<CitaMedica> observableList;
+    private ObservableList<Horario> observableListHorariosCitas;
+
 
     public void inicializarVista(){
         if(paciente != null){
             cargarCitas(paciente);
+            cargarComboBoxHorasCitas();
+            txt_bienvenido.setText("Bienvenido " + paciente.getNombre());
         }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         column_fecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFecha().toString()));
-        column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora()));
+        column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora().toString()));
         column_id.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCita()));
         column_motivo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotivo()));
         column_sala.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSala().getNumeroSala()));
@@ -109,10 +114,9 @@ public class PacienteViewController {
 
         observableList = FXCollections.observableArrayList();
         tbl_listaCitas.setItems(observableList);
-        
-        LinkedList<String> horas = pacienteController.getHorarios();
-        cbx_horaCita.getItems().addAll(horas);
 
+        observableListHorariosCitas = FXCollections.observableArrayList();
+        cbx_horaCita.setItems(observableListHorariosCitas);
     }
 
     @FXML
@@ -132,11 +136,13 @@ public class PacienteViewController {
     @FXML
     void agregarCitaAction(ActionEvent event) {
         LocalDate fecha = dp_fechaCita.getValue();
-        String hora = cbx_horaCita.getValue();
+        Horario hora = cbx_horaCita.getValue();
         String notasPrevias = txt_notasPreviasCita.getText();
         String motivo = txt_motivoCita.getText();
         try{
             pacienteController.registrarCita(fecha, hora, motivo, notasPrevias, paciente.getCedula());
+            cargarCitas(paciente);
+            mostrarAlerta("Cita registrada exitosamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
@@ -153,10 +159,13 @@ public class PacienteViewController {
 
         @FXML
         void borrarCitaAction(ActionEvent event) throws Exception{
+        obtenerCitaSeleccionada();
             if (selectedCita == null){
                 throw new Exception("Seleccione una cita valida");
             }
             pacienteController.eliminarCita(selectedCita.getIdCita());
+            mostrarAlerta("Cita eliminada correctamente", Alert.AlertType.CONFIRMATION);
+            cargarCitas(paciente);
         }
 
         public void cargarCitas(Paciente paciente){
@@ -166,9 +175,13 @@ public class PacienteViewController {
             observableList.setAll(citasMedicas);
         }
 
-        public void cargarHorasCitas(){
-        pacienteController.getHorarios();
+        public void cargarComboBoxHorasCitas(){
+            LinkedList<Horario> lista = pacienteController.getHorarios();
+
+            cbx_horaCita.getItems().clear();
+            observableListHorariosCitas.setAll(lista);
         }
+
 
 
     // Método para mostrar alertas

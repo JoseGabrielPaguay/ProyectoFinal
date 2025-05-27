@@ -1,11 +1,9 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
-import co.edu.uniquindio.trabajofinalcode.model.Horario;
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
+import co.edu.uniquindio.trabajofinalcode.model.Usuario;
 
-import java.util.LinkedList;
-
-public class HorariosMedicoController {
+public class EnviarCodigoContrasenaController {
 
     Hospital hospital;
 
@@ -13,19 +11,21 @@ public class HorariosMedicoController {
         this.hospital = hospital;
     }
 
-    public void setHorarioMedico(Horario horarioMedico, String cedulaMedico){
+    public void mandarCodigoCorreo(String correo){
         try{
-            hospital.setHorarioMedico(horarioMedico, cedulaMedico);
+            hospital.enviarCodigoCorreo(correo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public LinkedList<Horario> horariosAElegirMedico(){
+    public Usuario obtenerUsuario(String correo){
         try{
-            return hospital.horariosAElegirMedico();
+            return hospital.obtenerUsuarioCorreo(correo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }

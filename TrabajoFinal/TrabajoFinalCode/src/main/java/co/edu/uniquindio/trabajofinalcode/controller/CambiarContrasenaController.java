@@ -2,7 +2,7 @@ package co.edu.uniquindio.trabajofinalcode.controller;
 
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
 
-public class IngresarCodigoController {
+public class CambiarContrasenaController {
 
     Hospital hospital;
 

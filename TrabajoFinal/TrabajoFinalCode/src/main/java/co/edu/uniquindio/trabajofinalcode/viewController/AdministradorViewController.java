@@ -207,7 +207,6 @@ public class AdministradorViewController {
 
     @FXML
     void actualizarMedicoAction(ActionEvent event) {
-        obtenerMedicoSeleccionado();
 
         String nombreNuevo = txt_nombreMedico.getText();
         String apellidoNuevo = txt_apellidoMedico.getText();
@@ -221,6 +220,7 @@ public class AdministradorViewController {
         try{
             administradorController.actualizarMedico(nombreNuevo, apellidoNuevo, cedula, telefonoNuevo,
                     fechaNacimientoNueva, especialidadMedicaNueva, correoNuevo, numeroLicenciaNueva);
+            cargarMedicos();
             mostrarAlerta("Medico actualizado exitosamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -229,10 +229,30 @@ public class AdministradorViewController {
 
     }
 
+    private void listenerSelectionMedico() {
+        tbl_listaMedicos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            medicoSeleccionado = newSelection;
+            llenarDatosmedico();
+        });
+    }
+
+    public void llenarDatosmedico(){
+        obtenerMedicoSeleccionado();
+
+        if(medicoSeleccionado != null){
+            txt_nombreMedico.setText(medicoSeleccionado.getNombre());
+            txt_apellidoMedico.setText(medicoSeleccionado.getApellido());
+            txt_cedulaMedico.setText(medicoSeleccionado.getCedula());
+            txt_correoMedico.setText(medicoSeleccionado.getCorreo());
+            txt_telefonoMedico.setText(medicoSeleccionado.getTelefono());
+            dp_fechaNacimientoMedico.setValue(medicoSeleccionado.getFechaNacimiento());
+            cb_especialidadMedica.setValue(medicoSeleccionado.getEspecialidad());
+            txt_numeroLicenciaMedico.setText(medicoSeleccionado.getNumeroLicencia());
+        }
+    }
+
     @FXML
     void actualizarPacienteAction(ActionEvent event) {
-
-        obtenerPacienteSeleccionado();
 
         String nombreNuevo = txt_nombrePaciente.getText();
         String apellidoNuevo = txt_apellidoPaciente.getText();
@@ -246,12 +266,34 @@ public class AdministradorViewController {
         try{
             administradorController.actualizarPacienteAdmin(cedula, nombreNuevo, apellidoNuevo, epsNueva,
                     telefonoNuevo, correoNuevo, fechaNacimientoNueva, nuevoTipoSangre);
+            cargarPacientes();
             mostrarAlerta("Paciente actualizado con exito", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void listenerSelectionPaciente() {
+        tbl_listaPacientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            pacienteSeleccionado = newSelection;
+            llenarDatosPaciente();
+        });
+    }
+
+    public void llenarDatosPaciente(){
+        obtenerPacienteSeleccionado();
+
+        if(pacienteSeleccionado != null){
+            txt_nombrePaciente.setText(pacienteSeleccionado.getNombre());
+            txt_apellidoPaciente.setText(pacienteSeleccionado.getApellido());
+            txt_cedulaP.setText(pacienteSeleccionado.getCedula());
+            txt_correoP.setText(pacienteSeleccionado.getCorreo());
+            txt_telefonoP.setText(pacienteSeleccionado.getTelefono());
+            dp_fechaNacimientoP.setValue(pacienteSeleccionado.getFechaNacimiento());
+            cb_tipoSangreP.setValue(pacienteSeleccionado.getTipoSangre());
+        }
     }
 
     @FXML
@@ -268,8 +310,9 @@ public class AdministradorViewController {
         String contrasena = txt_contrasenaMedico.getText();
 
         try{
-            administradorController.crearMedico(nombre, apellido, cedula, correo, telefono, fechaNacimiento, especialidadMedica, numeroLicencia, contrasena);
-            mostrarAlerta("Medico actualizado correctamente", Alert.AlertType.CONFIRMATION);
+            administradorController.crearMedico(nombre, apellido, cedula, telefono, numeroLicencia, fechaNacimiento, especialidadMedica, correo, contrasena);
+            cargarMedicos();
+            mostrarAlerta("Medico creado correctamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
@@ -305,6 +348,7 @@ public class AdministradorViewController {
         String numeroSala = txt_numeroSala.getText();
         try{
             administradorController.crearSala(numeroSala);
+            cargarSalas();
             mostrarAlerta("Sala creada correctamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -319,6 +363,7 @@ public class AdministradorViewController {
 
         try{
             administradorController.eliminarCita(citaSeleccionada.getIdCita());
+            cargarCitas();
             mostrarAlerta("Cita eliminada con exito", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -332,6 +377,7 @@ public class AdministradorViewController {
         obtenerMedicoSeleccionado();
         try{
             administradorController.eliminarMedico(medicoSeleccionado.getCedula());
+            cargarMedicos();
             mostrarAlerta("Medico eliminado extitosamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -345,6 +391,7 @@ public class AdministradorViewController {
         obtenerPacienteSeleccionado();
         try{
             administradorController.eliminarPaciente(pacienteSeleccionado.getCedula());
+            cargarPacientes();
             mostrarAlerta("Paciente eliminado correctamente", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -355,23 +402,28 @@ public class AdministradorViewController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
 
+        //Tabla pacientes
         column_nombrePaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         column_apellidoPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
         column_cedulaPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCedula()));
+        column_telefonoPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
         column_correoPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCorreo()));
         column_fechaNacimientoPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaNacimiento().toString()));
         column_tipoSangrePaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoSangre().toString()));
         column_epsPaciente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEps()));
 
+        //Tabla citas
         column_idCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCita()));
         column_fechaCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFecha().toString()));
-        column_horaCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora()));
+        column_horaCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora().toString()));
         column_motivoCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotivo()));
         column_notasPreviasCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNotasPrevias()));
         column_SalaCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSala().getNumeroSala()));
 
+        //Tabla salas
         column_numeroSala.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroSala()));
 
+        //Tabla medicos
         column_nombreMedico.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         column_apellidoMedico.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
         column_cedulaMedico.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCedula()));
@@ -396,6 +448,9 @@ public class AdministradorViewController {
 
         observableListEspecialidadMedica = FXCollections.observableArrayList();
         cb_especialidadMedica.setItems(observableListEspecialidadMedica);
+
+        listenerSelectionPaciente();
+        listenerSelectionMedico();
 
     }
 
@@ -452,25 +507,7 @@ public class AdministradorViewController {
         if (selectedItem != null) {
             this.medicoSeleccionado = selectedItem;
         }
-
-        Medico medico = medicoSeleccionado;
-        String nombre = medico.getNombre();
-        String apellido = medico.getApellido();
-        String cedula = medico.getCedula();
-        String telefono = medico.getTelefono();
-        String numeroLicencia = medico.getNumeroLicencia();
-        LocalDate fechaNacimiento = medico.getFechaNacimiento();
-        EspecialidadMedica especialidadMedica = medico.getEspecialidad();
-        String correo = medico.getCorreo();
-
-        txt_nombreMedico.setText(nombre);
-        txt_apellidoMedico.setText(apellido);
-        txt_cedulaMedico.setText(cedula);
-        txt_telefonoMedico.setText(telefono);
-        txt_numeroLicenciaMedico.setText(numeroLicencia);
-        dp_fechaNacimientoMedico.setValue(fechaNacimiento);
-        cb_especialidadMedica.setValue(especialidadMedica);
-        txt_correoMedico.setText(correo);
+        //Cambios aqui
     }
 
     // Método para obtener el objeto seleccionado de la tabla de citas
@@ -482,7 +519,7 @@ public class AdministradorViewController {
         CitaMedica citaMedica = citaSeleccionada;
         String idCta = citaMedica.getIdCita();
         LocalDate fecha = citaMedica.getFecha();
-        String hora = citaMedica.getHora();
+        Horario hora = citaMedica.getHora();
         String motivo = citaMedica.getMotivo();
         String notasPrevias = citaMedica.getNotasPrevias();
         Sala sala = citaMedica.getSala();
@@ -506,6 +543,7 @@ public class AdministradorViewController {
         cargarSalas();
         cargarPacientes();
         cargarComboBoxGrupoSanguineo();
+        cargarComboBoxEspecialidadMedica();
 
     }
 

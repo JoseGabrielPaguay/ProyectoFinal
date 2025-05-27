@@ -31,13 +31,8 @@ public class DiagnosticosViewController {
     private ObservableList<Diagnostico> observableList;
 
     public void inicializarVista(){
-        try{
-            if(paciente != null){
-                cargarDiagnosticosPaciente(paciente);
-            }
-        } catch (Exception e) {
-            mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
-            throw new RuntimeException(e);
+        if(paciente != null){
+            cargarDiagnosticosPaciente(paciente);
         }
     }
 

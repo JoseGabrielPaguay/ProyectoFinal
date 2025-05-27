@@ -1,6 +1,7 @@
 package co.edu.uniquindio.trabajofinalcode.controller;
 
 import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
+import co.edu.uniquindio.trabajofinalcode.model.Horario;
 import co.edu.uniquindio.trabajofinalcode.model.Hospital;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class PacienteController {
         this.hospital = hospital;
     }
 
-    public void registrarCita(LocalDate fecha, String hora, String motivo, String notasPrevias, String idPaciente){
+    public void registrarCita(LocalDate fecha, Horario hora, String motivo, String notasPrevias, String idPaciente){
         try{
             hospital.registrarCitaMedica(fecha, hora, motivo, notasPrevias, idPaciente);
         } catch (Exception e) {
@@ -38,8 +39,8 @@ public class PacienteController {
         }
     }
 
-    public LinkedList<String> getHorarios(){
-        return hospital.;
+    public LinkedList<Horario> getHorarios(){
+        return hospital.horariosDisponiblesCita();
     }
 
 

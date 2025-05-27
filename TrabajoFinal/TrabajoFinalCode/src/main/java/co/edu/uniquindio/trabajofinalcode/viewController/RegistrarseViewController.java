@@ -68,6 +68,7 @@ public class RegistrarseViewController {
         try{
             registrarseController.registrarAdmin(nombre, apellido, cedula, correo, telefono, fechaNacimiento, contrasena);
             mostrarAlerta("Admnistrador registrado correctamente", Alert.AlertType.CONFIRMATION);
+            app.openViewIniciarSeision();
         } catch (Exception e) {
             mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             throw new RuntimeException(e);
@@ -89,9 +90,5 @@ public class RegistrarseViewController {
         alert.showAndWait();
     }
 
-    private void cerrarVentana() {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        stage.close();
-    }
 }
 

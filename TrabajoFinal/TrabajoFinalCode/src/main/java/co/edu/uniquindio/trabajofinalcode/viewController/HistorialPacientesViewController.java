@@ -8,13 +8,11 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.trabajofinalcode.App;
 import co.edu.uniquindio.trabajofinalcode.controller.HistorialPacientesController;
 import co.edu.uniquindio.trabajofinalcode.model.CitaMedica;
-import co.edu.uniquindio.trabajofinalcode.model.Medico;
 import co.edu.uniquindio.trabajofinalcode.model.Paciente;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -78,7 +76,7 @@ public class HistorialPacientesViewController {
     void initialize() {
         column_diCita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCita()));
         column_fecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFecha().toString()));
-        column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora()));
+        column_hora.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHora().toString()));
         column_motivo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotivo()));
         column_sala.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSala().getNumeroSala()));
         column_medico.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMedico().getNombre()));

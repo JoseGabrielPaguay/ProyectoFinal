@@ -4,6 +4,7 @@ module co.edu.uniquindio.trabajofinalcode {
     requires java.desktop;
     requires org.simplejavamail.core;
     requires org.simplejavamail;
+    requires java.logging;
 
 
     opens co.edu.uniquindio.trabajofinalcode to javafx.fxml;

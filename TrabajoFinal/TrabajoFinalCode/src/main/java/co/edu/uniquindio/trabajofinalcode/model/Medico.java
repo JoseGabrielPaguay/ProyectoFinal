@@ -9,8 +9,8 @@ public class Medico extends Usuario implements Serializable {
     private Horario horario;
 
     public Medico(String nombre, String apellido, String id, String correo,
-                  String contacto, LocalDate fechaNacimiento, EspecialidadMedica especialidad, String numeroLicencia, String contraseña) {
-        super(nombre, apellido, id, correo, contacto, fechaNacimiento,contraseña);
+                  String contacto, LocalDate fechaNacimiento, EspecialidadMedica especialidad, String numeroLicencia, String contrasena) {
+        super(nombre, apellido, id, correo, contacto, fechaNacimiento,contrasena);
         this.especialidad = especialidad;
         this.numeroLicencia = numeroLicencia;
     }

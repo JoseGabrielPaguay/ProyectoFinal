@@ -16,6 +16,4 @@ public class ActualizarPacienteController {
             throw new RuntimeException(e);
         }
     }
-
-
 }
