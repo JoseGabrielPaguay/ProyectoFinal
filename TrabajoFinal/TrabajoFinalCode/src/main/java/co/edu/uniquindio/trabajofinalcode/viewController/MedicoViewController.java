@@ -33,6 +33,10 @@ public class MedicoViewController {
         this.medico = medico;
     }
 
+
+    @FXML // fx:id="lbl_archivoDiagnostico"
+    private Label lbl_archivoDiagnostico; // Value injected by FXMLLoader
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -159,6 +163,12 @@ public class MedicoViewController {
         if (selectedItem != null) {
             this.selectedPaciente = selectedItem;
         }
+    }
+
+
+    @FXML
+    void abrirEnviarDiagnosticoView(MouseEvent event) {
+        mostrarAlerta("Función no implementada", Alert.AlertType.INFORMATION);
     }
 }
 

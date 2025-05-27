@@ -241,4 +241,20 @@ public class App extends Application {
         launch();
     }
 
+    public void openViewEnviarArchivoMedicoView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("enviarArchivoMedicoView.fxml"));
+            javafx.scene.layout.AnchorPane rootLayout = (javafx.scene.layout.AnchorPane) loader.load();
+            EnviarCodigoContrasenaViewController enviarCodigoContrasenaViewController = loader.getController();
+            enviarCodigoContrasenaViewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
